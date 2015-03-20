@@ -1,7 +1,7 @@
 {
-  "name": "citycontext",
+  "name": "citycontext-ui",
   "version": "0.1.0",
-  "description": "City Context widget",
+  "description": "City Context widgets",
   "main": "index.js",
   "scripts": {
     "test": "test"
@@ -21,7 +21,8 @@
   "homepage": "https://github.com/citycontext/citycontext-ui",
   "readme": "README.md",
   "devDependencies": {
-    "browserify": "^9.0.3"
+    "browserify": "^9.0.3",
+    "less": "^2.4.0"
   },
   "dependencies": {
     "brfs": "^1.4.0",
@@ -31,6 +32,13 @@
     "request": "^2.53.0",
     "rickshaw": "^1.5.1",
     "tape": "^3.5.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^3.1.0",
+    "browserify": "^9.0.3",
+    "jshint": "^2.5.6",
+    "uglify-js": "^2.4.15",
+    "yuicompressor": "^2.4.8"
   },
   "browserify": {
     "transform": [

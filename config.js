@@ -1,6 +1,7 @@
 module.exports = {
-  baseUrl: undefined,
+  baseUrl: 'https://api.citycontext.com/beta/postcodes',
   queryString: undefined,
+  userKey: undefined,
   mapboxMapId: undefined,
   mapboxToken: undefined,
 };

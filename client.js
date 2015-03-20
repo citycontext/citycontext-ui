@@ -4,7 +4,8 @@ var config    = require('./config');
 
 module.exports = {
   withPostcodeEndpoint: function(postcode, label, onSuccess, onError) {
-    var url = config.baseUrl + postcode + config.queryString;
+    'use strict';
+    var url = config.baseUrl + '/' + postcode + '?user_key=' + config.userKey;
     analytics.notifySubmit(label, postcode);
 
     request(url, function(err, response, body) {
@@ -19,7 +20,7 @@ module.exports = {
         if (bodyErrorMessage) {
           errorMessage = bodyErrorMessage;
         } else {
-          errorMessage = "An error occurred, please try again later";
+          errorMessage = 'An error occurred, please try again later';
         }
 
         onError(errorMessage);
