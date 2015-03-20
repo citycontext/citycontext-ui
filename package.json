@@ -1,0 +1,40 @@
+{
+  "name": "citycontext",
+  "version": "0.1.0",
+  "description": "City Context widget",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/citycontext/citycontext-ui.git"
+  },
+  "author": {
+    "name": "ostapneko",
+    "email": "ostapneko@gmail.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/citycontext/citycontext-ui/issues"
+  },
+  "homepage": "https://github.com/citycontext/citycontext-ui",
+  "readme": "README.md",
+  "devDependencies": {
+    "browserify": "^9.0.3"
+  },
+  "dependencies": {
+    "brfs": "^1.4.0",
+    "d3": "^3.5.5",
+    "jade": "^1.9.2",
+    "mapbox.js": "^2.1.6",
+    "request": "^2.53.0",
+    "rickshaw": "^1.5.1",
+    "tape": "^3.5.0"
+  },
+  "browserify": {
+    "transform": [
+      "brfs"
+    ]
+  }
+}

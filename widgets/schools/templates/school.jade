@@ -1,0 +1,15 @@
+.section.school(id = school.id)
+  .school-heading
+    h5
+      a(href='##{school.id}')!= school.label
+      p.pull-right= school.distance
+  .school-description
+    dl.school-performance.dl-horizontal
+      dt Overall effectiveness
+      dd!= school.overallEffectivenessMark
+      dt Quality of teaching
+      dd!= school.qualityOfTeachingMark
+      dt Leadership
+      dd!= school.leadershipAndManagementMark
+    p.inspection-report.pull-right
+      a(href=school.lastInspectionUrl, target='_blank') Full Ofsted report
