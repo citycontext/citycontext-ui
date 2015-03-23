@@ -2,7 +2,6 @@ var fromHTML = function fromHTML(html) {
   var container = document.createElement('div');
   container.innerHTML = html;
   var nodeList = container.childNodes;
-  // Fuck that
   return Array.prototype.slice.call(nodeList);
 };
 

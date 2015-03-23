@@ -66,10 +66,7 @@ DemographicsWidget.prototype.render = function() {
   var form = Form(this.formEl, function(val) {
     reset();
 
-    res.style.display = 'none';
-    this.errMsg.style.display = 'none';
-
-    client.withPostcodeEndpoint(val, "demographics", onSuccess, this.onError);
+    client.withPostcodeEndpoint(val, 'demographics', onSuccess, this.onError);
   }.bind(this));
 
   form.render();
