@@ -15,18 +15,16 @@
   <body>
     <div class="container">
       <h2>Criminality</h2>
-      <form id="criminality-form" class="form-inline"></form>
-      <div id="criminality-results" style="display: none"></div>
-      <div id="criminality-error" style="display: none"></div>
+      <div id="criminality-widget"></div>
     </div>
 
     <script src="../dist/citycontext-ui.min.js"></script>
     <script>
       (function() {
-        citycontext.config.userKey     = 'my City Context use key';
+        citycontext.config.userKey     = 'my City Context user key';
         citycontext.config.mapboxMapId = 'my Mapbox map id';
         citycontext.config.mapboxToken = 'my Mapbox token';
-        citycontext.CriminalityWidget('#criminality-form', '#criminality-results', '#criminality-error').render();
+        citycontext.CriminalityWidget('#criminality-widget').render();
       })();
     </script>
   </body>

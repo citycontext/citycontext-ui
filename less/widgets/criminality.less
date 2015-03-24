@@ -1,11 +1,12 @@
 @import 'less/theme';
+@import 'less/grid';
 
 .criminality-graph-container {
   position: relative;
-  display: inline-block;
+  &:extend(.col);
+  &:extend(.span_6_of_12);
 }
 .criminality-graph {
-  display: inline-block;
   margin-left: 40px;
 }
 .criminality-y-axis {
@@ -14,4 +15,9 @@
   bottom: 0;
   width: 40px;
   fill: @chart-y-axis-color;
+}
+
+.criminality-map-container {
+  &:extend(.col);
+  &:extend(.span_6_of_12);
 }

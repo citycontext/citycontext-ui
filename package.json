@@ -21,28 +21,19 @@
   "homepage": "https://github.com/citycontext/citycontext-ui",
   "readme": "README.md",
   "devDependencies": {
-    "browserify": "^9.0.3",
-    "less": "^2.4.0"
-  },
-  "dependencies": {
-    "brfs": "^1.4.0",
-    "d3": "^3.5.5",
-    "jade": "^1.9.2",
-    "mapbox.js": "^2.1.6",
-    "request": "^2.53.0",
-    "rickshaw": "^1.5.1",
-    "tape": "^3.5.0"
-  },
-  "devDependencies": {
     "autoprefixer": "^3.1.0",
     "browserify": "^9.0.3",
     "jshint": "^2.5.6",
+    "react-tools": "^0.13.1",
     "uglify-js": "^2.4.15",
     "yuicompressor": "^2.4.8"
   },
-  "browserify": {
-    "transform": [
-      "brfs"
-    ]
+  "dependencies": {
+    "d3": "^3.5.5",
+    "mapbox.js": "^2.1.6",
+    "promise": "^6.1.0",
+    "react": "^0.13.1",
+    "request": "^2.53.0",
+    "rickshaw": "^1.5.1"
   }
 }
