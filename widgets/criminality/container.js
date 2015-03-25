@@ -5,7 +5,6 @@ var Errors  = require('../shared/errors');
 var Results = require('./results');
 var client  = require('../../client');
 
-
 var Container = R.createClass({
   displayName: 'criminality-container',
 

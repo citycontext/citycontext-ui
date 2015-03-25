@@ -4,4 +4,15 @@ module.exports = {
   userKey: undefined,
   mapboxMapId: undefined,
   mapboxToken: undefined,
+
+  chartsOptions: {
+    global: {
+      responsive: true
+    },
+    Line: {
+      datasetFill: false,
+      scaleShowGridLines: false,
+      pointDot: false
+    }
+  }
 };

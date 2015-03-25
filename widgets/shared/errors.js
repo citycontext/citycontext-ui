@@ -9,6 +9,11 @@ var Errors = R.createClass({
 
   render: function() {
     var style = this.props.show ? {} : { display: 'none' };
+
+    if (this.props.text) {
+      console.error(this.props.text);
+    }
+
     return D.section(null,
       D.p({ className: 'error', style: style }, this.props.text)
     );

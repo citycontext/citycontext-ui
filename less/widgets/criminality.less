@@ -2,19 +2,13 @@
 @import 'less/grid';
 
 .criminality-graph-container {
+  height: @widget-height;
   position: relative;
   &:extend(.col);
   &:extend(.span_6_of_12);
 }
 .criminality-graph {
   margin-left: 40px;
-}
-.criminality-y-axis {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 40px;
-  fill: @chart-y-axis-color;
 }
 
 .criminality-map-container {
