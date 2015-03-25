@@ -12,6 +12,7 @@ var Container = R.createClass({
     return {
       data: null,
       error: null,
+      client: this.props.client || client,
       showResults: false,
       showErrors: false
     };
@@ -24,7 +25,7 @@ var Container = R.createClass({
       showResults: false
     });
 
-    client.byPostcode(val)
+    this.state.client.byPostcode(val)
       .then(function(data) {
         self.setState({
           showResults: true,
@@ -40,7 +41,7 @@ var Container = R.createClass({
   },
 
   render: function() {
-    return D.div({ className: 'criminality-widget-container' },
+    return D.div({ className: 'criminality-widget-container', client: null },
       R.createElement(Form, { onSubmit: this.query }),
       R.createElement(Results, { show: this.state.showResults, data: this.state.data }),
       R.createElement(Errors, { text: this.state.error, show: this.state.showErrors })
