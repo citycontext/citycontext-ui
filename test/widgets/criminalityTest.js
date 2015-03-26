@@ -1,4 +1,3 @@
-require('../testHelper');
 var tape      = require('tape');
 var R         = require('react/addons');
 var testUtils = R.addons.TestUtils;
