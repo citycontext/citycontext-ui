@@ -5,36 +5,60 @@ var Graph     = require('../../../widgets/criminality/graph.js');
 
 var crimeData = {
   '2015-10': 31,
-  '2015-2': 20,
+  '2015-11': 20,
   '2012-8': 26
 };
 var graphElement = R.createElement(Graph, { crimeData: crimeData });
 var graph = testUtils.renderIntoDocument(graphElement);
 
-tape('getPointsByYear', function(t) {
-  t.plan(1);
+tape('getPointsBy', function(t) {
+  t.plan(3);
   t.deepEqual(
-    graph.getPointsByYear(),
+    graph.getPointsBy('month'),
     [
       [ '2012', { 'Aug': 26 } ],
       [ '2015', {
-        'Feb': 20,
-        'Oct': 31
+        'Oct': 31,
+        'Nov': 20,
       }]
-    ]
-  );
+    ],
+    'get points by month');
+
+  t.deepEqual(
+    graph.getPointsBy('quarter'),
+    [
+      [ '2012', { 'Q3': 26 } ],
+      [ '2015', { 'Q4': 51 } ]
+    ],
+    'get points by quarter');
+
+  t.deepEqual(
+    graph.getPointsBy('year'),
+    [
+      [ '2012', { 'Year': 26 } ],
+      [ '2015', { 'Year': 51 } ]
+    ],
+    'get points by year');
 });
 
-tape('getData', function(t) {
+tape('getDataBy', function(t) {
   t.plan(3);
-  var expData2012 = new Array(12);
+  var nullArray = function(n) {
+    var res = [];
+    for (var i = 0; i < n; i ++) {
+      res[i] = null;
+    }
+    return res;
+  };
+
+  var expData2012 = nullArray(12);
   expData2012[7] = 26;
 
-  var expData2015 = new Array(12);
-  expData2015[1] = 20;
+  var expData2015 = nullArray(12);
   expData2015[9] = 31;
+  expData2015[10] = 20;
 
-  var data = graph.getData();
+  var data = graph.getDataBy('month');
 
   t.deepEqual(
     data.labels,

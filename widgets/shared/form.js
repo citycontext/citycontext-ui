@@ -39,7 +39,7 @@ var Form = R.createClass({
       D.form({ className: 'form', onSubmit: this.handleSubmit },
         D.div({ className: 'form-group' },
           D.input({ className: 'input', type: 'text', ref: 'input' }),
-          D.button({ type: 'submit' }, 'Go')
+          D.button({ type: 'submit', className: 'button' }, 'Go')
         ),
         D.div({className: 'form-group'},
           D.div({ className: 'spinner', style: spinnerStyle }, 'Loading')

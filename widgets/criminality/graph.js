@@ -2,7 +2,6 @@ var R = require('react');
 var D = R.DOM;
 var Chart = require('chart.js');
 var config = require('../../config');
-var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 (function mergeChartOptions() {
   for (var i in config.chartsOptions) {
@@ -24,7 +23,9 @@ var Graph = R.createClass({
 
   getInitialState: function() {
     return {
-      graph: null
+      graph: null,
+      chart: null,
+      period: 'quarter'
     };
   },
 
@@ -41,21 +42,43 @@ var Graph = R.createClass({
     };
   },
 
-  getPointsByYear: function() {
-    var crimeData = this.props.crimeData;
-    var byYear = {};
+  getLabelsBy: function(period) {
+    if (period === 'month') {
+      return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    } else if (period === 'quarter') {
+      return ['Q1', 'Q2', 'Q3', 'Q4'];
+    } else if (period === 'year') {
+      return ['Year'];
+    } else {
+      throw 'Invalid timeframe in getLabelsBy. Valid ones are month and quarter';
+    }
+  },
 
-    for (var k in crimeData) {
+  getPointsBy: function(period) {
+    var crimeData = this.props.crimeData;
+
+    var byYear = Object.keys(crimeData).reduce(function(acc, k) {
       if (crimeData.hasOwnProperty(k)) {
         var dateFragments = k.split('-');
         var year          = parseInt(dateFragments[0]);
         var monthNum      = parseInt(dateFragments[1]) - 1; // months go from 0 to 11
-        var month         = months[monthNum];
+        acc[year] = acc[year] || {};
 
-        byYear[year] = byYear[year] || {};
-        byYear[year][month] = crimeData[k];
+        if (period === 'month') {
+          var month = this.getLabelsBy('month')[monthNum];
+          acc[year][month] = crimeData[k];
+        } else if (period === 'quarter') {
+          var quarterNum = Math.floor(monthNum / 3) + 1;
+          var quarter = 'Q' + quarterNum;
+          acc[year][quarter] = (acc[year][quarter] || 0) + crimeData[k];
+        } else if (period === 'year') {
+          acc[year]['Year'] = (acc[year]['Year'] || 0) + crimeData[k];
+        } else {
+          throw 'Invalid timeframe in getPointsBy. Valid ones are month and quarter';
+        }
+        return acc;
       }
-    }
+    }.bind(this), {});
 
     var res = Object.keys(byYear).map(function(y) {
       if (byYear.hasOwnProperty(y)) {
@@ -73,21 +96,18 @@ var Graph = R.createClass({
     }
   },
 
-  getData: function() {
-    var pointsByYear = this.getPointsByYear();
-    var datasets = pointsByYear.map(function(byYear, index) {
-      var year = byYear[0];
-      var byMonth = byYear[1];
-      var data = new Array(12);
-      var colors = this.toColors(config.criminalityGraph.barColorsRGBA[index]);
+  getDataBy: function(period) {
+    var pointsByPeriod = this.getPointsBy(period);
+    var labels = this.getLabelsBy(period);
+    var datasets = pointsByPeriod.map(function(byYear, index) {
+      var year     = byYear[0];
+      var byPeriod = byYear[1];
+      var colors   = this.toColors(config.criminalityGraph.barColorsRGBA[index]);
 
-      Object.keys(byMonth).forEach(function(m) {
-        var i = months.indexOf(m);
-        if (i > -1) {
-          data[i] = byMonth[m];
-        }
-      });
-
+      var data = labels.reduce(function(acc, l) {
+        acc.push(byPeriod[l] || null);
+        return acc;
+      }, []);
 
       return {
         label: year,
@@ -100,7 +120,7 @@ var Graph = R.createClass({
     }, this);
 
     return {
-      labels: months,
+      labels: labels,
       datasets: datasets
     };
   },
@@ -110,23 +130,29 @@ var Graph = R.createClass({
   updateGraph: function() {
     if (!this.props.crimeData) { return; }
 
-    this.state.graph.Bar(this.getData());
+
+    if (this.state.graph) {
+      this.state.graph.destroy();
+    }
+
+    this.state.graph = this.state.chart.Bar(this.getDataBy(this.state.period));
   },
 
 
   componentDidMount: function() {
     var canvas = this.refs.graph.getDOMNode();
+    canvas.width = this.getDOMNode().offsetWidth;
+    canvas.height = this.getDOMNode().offsetHeight;
+
+    var ctx = canvas.getContext('2d');
+    this.state.chart = new Chart(ctx);
 
     if (!canvas.getContext) {
       console.warn('canvas not supported');
       return;
     }
 
-    canvas.width = this.getDOMNode().offsetWidth;
-    canvas.height = this.getDOMNode().offsetHeight;
 
-    var ctx = canvas.getContext('2d');
-    this.state.graph = new Chart(ctx);
     this.updateGraph();
   },
 
@@ -134,11 +160,50 @@ var Graph = R.createClass({
     this.updateGraph();
   },
 
+  changePeriod: function(period) {
+    return function() {
+      this.setState({ period: period });
+    }.bind(this);
+  },
+
   render: function() {
     if (!this.props.crimeData) {
       return D.div();
     }
+
+    var years = this.getPointsBy('year').map(function(x) { return x[0]; });
+    var colors = [0, 1, 2].map(function(i) {
+      return this.toColors(config.criminalityGraph.barColorsRGBA[i]).fillColor;
+    }.bind(this));
+
+    var legendItem = function(index) {
+      if (years[index]) {
+        return D.span({
+          className: 'legend-item',
+          style: { backgroundColor: colors[index] }
+        }, years[index]);
+      } else {
+        return D.span({});
+      }
+    };
+
+    var changePeriodButton = function(period) {
+      var selected  = period === this.state.period;
+      var className = selected ? 'selected button' : 'button';
+      return D.button({ onClick: this.changePeriod(period), className: className }, 'By ' + period);
+    }.bind(this);
+
     return D.div({ className: 'criminality-graph-container' },
+      D.div({ className: 'control' },
+        changePeriodButton('month'),
+        changePeriodButton('quarter'),
+        changePeriodButton('year')
+      ),
+      D.div({ className: 'legend' },
+        legendItem(0),
+        legendItem(1),
+        legendItem(2)
+      ),
       D.canvas({ className: 'criminality-graph', ref: 'graph' })
     );
   }

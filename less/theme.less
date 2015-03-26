@@ -1,4 +1,8 @@
-@main-color: #409840;
+@main-color: #40983F;
+
+@button-text-color: white;
+@button-color: @main-color;
+
 @background-color: #FFF;
 @spinner-color: #CCC;
 
@@ -9,4 +13,22 @@
 
 body {
   font-family: @font;
+}
+
+.button {
+  border: none;
+  padding: 7px 12px;
+  font-size: 16px;
+  margin-left: 10px;
+  color: @button-text-color;
+  background-color: @button-color;
+
+  &:hover {
+    background-color: darken(@button-color, 5%);
+    cursor: pointer;
+  }
+
+  &.selected {
+    background-color: darken(@button-color, 10%);
+  }
 }
