@@ -4,7 +4,7 @@
   "description": "City Context widgets",
   "main": "index.js",
   "scripts": {
-    "test": "browserify test/**/*Test.js | testling -x google-chrome"
+    "test": "browserify `find test -name '*Test.js'` | testling -x google-chrome"
   },
   "repository": {
     "type": "git",
