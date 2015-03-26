@@ -4,37 +4,57 @@ var testUtils = R.addons.TestUtils;
 var Graph     = require('../../../widgets/criminality/graph.js');
 
 var crimeData = {
-  '2015-1': 31,
-  '2013-9': 22,
+  '2015-10': 31,
+  '2015-2': 20,
   '2012-8': 26
 };
 var graphElement = R.createElement(Graph, { crimeData: crimeData });
 var graph = testUtils.renderIntoDocument(graphElement);
 
-tape('getPoints', function(t) {
+tape('getPointsByYear', function(t) {
   t.plan(1);
   t.deepEqual(
-    graph.getPoints(),
+    graph.getPointsByYear(),
     [
-      ['Aug 12', 26],
-      ['Sep 13', 22],
-      ['Jan 15', 31]
+      [ '2012', { 'Aug': 26 } ],
+      [ '2015', {
+        'Feb': 20,
+        'Oct': 31
+      }]
     ]
   );
 });
 
 tape('getData', function(t) {
-  t.plan(1);
+  t.plan(3);
+  var expData2012 = new Array(12);
+  expData2012[7] = 26;
+
+  var expData2015 = new Array(12);
+  expData2015[1] = 20;
+  expData2015[9] = 31;
+
+  var data = graph.getData();
+
   t.deepEqual(
-    graph.getData(),
+    data.labels,
+    ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+  );
+
+  t.deepEqual(data.datasets[0].data, expData2012);
+  t.deepEqual(data.datasets[1].data, expData2015);
+});
+
+tape('toColors', function(t) {
+  t.plan(1);
+
+  t.deepEqual(
+    graph.toColors([1,2,3]),
     {
-      labels: ['Aug 12', 'Sep 13', 'Jan 15'],
-      datasets: [
-        {
-          label: 'Total number of crimes',
-          data: [26, 22, 31]
-        }
-      ]
+      fillColor:       'rgba(1,2,3,0.5)',
+      strokeColor:     'rgba(1,2,3,0.8)',
+      highlightFill:   'rgba(1,2,3,0.75)',
+      highlightStroke: 'rgba(1,2,3,1)'
     }
   );
 });

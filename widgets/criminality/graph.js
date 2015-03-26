@@ -2,6 +2,7 @@ var R = require('react');
 var D = R.DOM;
 var Chart = require('chart.js');
 var config = require('../../config');
+var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 (function mergeChartOptions() {
   for (var i in config.chartsOptions) {
@@ -27,45 +28,81 @@ var Graph = R.createClass({
     };
   },
 
-  getPoints: function() {
+  toColors: function(rgba) {
+    var template = 'rgba(' + rgba.join(',') + ',$opacity)';
+    function color(opacity) {
+      return template.replace('$opacity', opacity);
+    }
+    return {
+      fillColor: color(0.5),
+      strokeColor: color(0.8),
+      highlightFill: color(0.75),
+      highlightStroke: color(1)
+    };
+  },
+
+  getPointsByYear: function() {
     var crimeData = this.props.crimeData;
-    var ps = [];
-    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    var byYear = {};
 
     for (var k in crimeData) {
       if (crimeData.hasOwnProperty(k)) {
         var dateFragments = k.split('-');
-        var year = parseInt(dateFragments[0]),
-            month = parseInt(dateFragments[1]) - 1; // months go from 0 to 11
+        var year          = parseInt(dateFragments[0]);
+        var monthNum      = parseInt(dateFragments[1]) - 1; // months go from 0 to 11
+        var month         = months[monthNum];
 
-        ps.push([
-          year * 100 + month,
-          '' + months[month] + ' ' + (year - 2000),
-          crimeData[k]
-        ]);
+        byYear[year] = byYear[year] || {};
+        byYear[year][month] = crimeData[k];
       }
     }
 
-    ps.sort(function(a, b) { return a[0] - b[0]; } );
+    var res = Object.keys(byYear).map(function(y) {
+      if (byYear.hasOwnProperty(y)) {
+        return ([y, byYear[y]]);
+      }
+    });
 
-    return ps.map(function(xs) { return xs.slice(1,3); });
+    res.sort(function(a, b) { return a[0] - b[0]; } );
+
+    //keep only last three years
+    if (res.length > 3) {
+      return res.slice(res.length - 3, res.length);
+    } else {
+      return res;
+    }
   },
 
   getData: function() {
-    var points = this.getPoints();
-    var labels = points.map(function(p) { return p[0]; });
-    var data = points.map(function(p) { return p[1]; });
+    var pointsByYear = this.getPointsByYear();
+    var datasets = pointsByYear.map(function(byYear, index) {
+      var year = byYear[0];
+      var byMonth = byYear[1];
+      var data = new Array(12);
+      var colors = this.toColors(config.criminalityGraph.barColorsRGBA[index]);
+
+      Object.keys(byMonth).forEach(function(m) {
+        var i = months.indexOf(m);
+        if (i > -1) {
+          data[i] = byMonth[m];
+        }
+      });
+
+
+      return {
+        label: year,
+        data: data,
+        fillColor: colors.fillColor,
+        strokeColor: colors.strokeColor,
+        highlightFill: colors.highlightFill,
+        highlightStroke: colors.highlightStroke
+      };
+    }, this);
 
     return {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Total number of crimes',
-          data: data
-        }
-      ]
+      labels: months,
+      datasets: datasets
     };
-
   },
 
   displayName: 'criminality-graph',
@@ -73,8 +110,9 @@ var Graph = R.createClass({
   updateGraph: function() {
     if (!this.props.crimeData) { return; }
 
-    this.state.graph.Line(this.getData());
+    this.state.graph.Bar(this.getData());
   },
+
 
   componentDidMount: function() {
     var canvas = this.refs.graph.getDOMNode();

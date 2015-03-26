@@ -9,10 +9,18 @@ module.exports = {
     global: {
       responsive: true
     },
-    Line: {
-      datasetFill: false,
-      scaleShowGridLines: false,
-      pointDot: false
+    Bar: {
+      barStrokeWidth : 0.5,
+      barDatasetValue : 3,
+      barDatasetSpacing : 0
     }
+  },
+
+  criminalityGraph: {
+    barColorsRGBA: [
+      [64, 152, 63],
+      [63, 64, 152],
+      [152, 63, 64]
+    ]
   }
 };
