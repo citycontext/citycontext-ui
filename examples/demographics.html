@@ -13,8 +13,8 @@
   </head>
   <body>
     <div class="container">
-      <h2>Criminality</h2>
-      <div id="criminality-widget"></div>
+      <h2>Demographics</h2>
+      <div id="demographics-widget"></div>
     </div>
 
     <script src="../dist/citycontext-ui.min.js"></script>
@@ -23,13 +23,9 @@
         citycontext.config.userKey     = 'my City Context user key';
         citycontext.config.mapboxMapId = 'my Mapbox map id';
         citycontext.config.mapboxToken = 'my Mapbox token';
-
-        citycontext.CriminalityWidget('#criminality-widget', {
-          onSuccess: function(input) {
-            console.log('Lookup successful for postcode ' + input);
-          }
-        }).render();
+        citycontext.DemographicsWidget('#demographics-widget').render();
       })();
     </script>
   </body>
 </html>
+

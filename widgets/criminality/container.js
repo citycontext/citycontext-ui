@@ -4,9 +4,16 @@ var Form    = require('../shared/form');
 var Errors  = require('../shared/errors');
 var Results = require('./results');
 var client  = require('../../client');
+var Promise = require('promise');
 
 var Container = R.createClass({
   displayName: 'criminality-container',
+
+  propTypes: {
+    onSubmitExternal:  R.PropTypes.func,
+    onSuccessExternal: R.PropTypes.func,
+    onErrorExternal:   R.PropTypes.func
+  },
 
   getInitialState: function() {
     return {
@@ -25,26 +32,41 @@ var Container = R.createClass({
       showResults: false
     });
 
-    this.state.client.byPostcode(val)
+    return this.state.client.byPostcode(val)
       .then(function(data) {
         self.setState({
           showResults: true,
-          data: data
+          data: data,
+          error: null
         });
-      })
-      .catch(function(error) {
+      }, function(error) {
         self.setState({
           showErrors: true,
+          data: null,
           error: error
         });
+        return Promise.reject(error);
       });
   },
 
   render: function() {
     return D.div({ className: 'criminality-widget-container', client: null },
-      R.createElement(Form, { onSubmit: this.query }),
-      R.createElement(Results, { show: this.state.showResults, data: this.state.data }),
-      R.createElement(Errors, { text: this.state.error, show: this.state.showErrors })
+      R.createElement(Form, {
+        onSubmit: this.query,
+        onSubmitExternal:  this.props.onSubmitExternal,
+        onSuccessExternal: this.props.onSuccessExternal,
+        onErrorExternal:   this.props.onErrorExternal
+      }),
+
+      R.createElement(Results, {
+        show: this.state.showResults,
+        data: this.state.data
+      }),
+
+      R.createElement(Errors, {
+        text: this.state.error,
+        show: this.state.showErrors
+      })
     );
   }
 });

@@ -11,7 +11,10 @@ var Form = R.createClass({
   displayName: 'form',
   propTypes: {
     // a callback that takes as argument the text input value
-    onSubmit: R.PropTypes.func
+    onSubmit: R.PropTypes.func,
+    onSubmitExternal:  R.PropTypes.func,
+    onSuccessExternal: R.PropTypes.func,
+    onErrorExternal:   R.PropTypes.func
   },
 
   getInitialState: function() {
@@ -25,11 +28,28 @@ var Form = R.createClass({
     this.setState({ status: statuses.waiting });
 
     var input = this.refs.input.getDOMNode().value;
-    var promise = Promise.resolve(this.props.onSubmit(input));
 
-    promise.done(function () {
-      this.setState({ status: statuses.idle });
-    }.bind(this));
+    var self = this;
+
+    if (this.props.onSubmitExternal) {
+      this.props.onSubmitExternal(input);
+    }
+
+    var promise = self.props.onSubmit(input);
+
+    promise
+      .then(function () {
+        if (self.props.onSuccessExternal) {
+          self.props.onSuccessExternal(input);
+        }
+      }, function(error) {
+        if (self.props.onErrorExternal) {
+          self.props.onErrorExternal(error);
+        }
+      })
+      .then(function() {
+        self.setState({ status: statuses.idle });
+      });
   },
 
   render: function() {
