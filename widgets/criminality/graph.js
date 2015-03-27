@@ -178,10 +178,13 @@ var Graph = R.createClass({
 
     var legendItem = function(index) {
       if (years[index]) {
-        return D.span({
-          className: 'legend-item',
-          style: { backgroundColor: colors[index] }
-        }, years[index]);
+        return D.div({className: 'legend-item' },
+          D.div({
+            className: 'legend-color',
+            style: { backgroundColor: colors[index] }
+          }),
+          D.span({ className: 'legend-text' }, years[index])
+        );
       } else {
         return D.span({});
       }
@@ -199,7 +202,7 @@ var Graph = R.createClass({
         changePeriodButton('quarter'),
         changePeriodButton('year')
       ),
-      D.div({ className: 'legend' },
+      D.section({ className: 'legend' },
         legendItem(0),
         legendItem(1),
         legendItem(2)

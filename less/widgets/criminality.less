@@ -2,7 +2,7 @@
 @import 'less/grid';
 
 .criminality-graph-container {
-  height: @widget-height - 50px;
+  height: @widget-height - 70px;
   position: relative;
   &:extend(.col);
   &:extend(.span_6_of_12);
@@ -16,9 +16,20 @@
   }
 
   .legend {
+    float: right;
     .legend-item {
-      width: 200px;
-      height: 50px;
+      margin-left: 30px;
+      float: left;
+      .legend-color {
+        width: 1em;
+        height: 1em;
+        margin-right: 8px;
+        float: left;
+      }
+
+      .legend-text {
+        float: left;
+      }
     }
   }
 }
