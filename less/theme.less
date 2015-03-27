@@ -1,15 +1,20 @@
+//Main colors
+@background-color: #FFF;
 @main-color: #40983F;
 
+@font: Helvetica,arial,nimbussansl,liberationsans,freesans,clean,sans-serif,"Segoe UI Emoji","Segoe UI Symbol";
+
+// Buttons
 @button-text-color: white;
 @button-color: @main-color;
+@button-height: 2em;
+@button-padding: 7px 12px;
+@button-font-size: 1em;
 
-@background-color: #FFF;
+@widget-height: 500px;
 @spinner-color: #CCC;
 
 @chart-y-axis-color: black;
-@font: Helvetica,arial,nimbussansl,liberationsans,freesans,clean,sans-serif,"Segoe UI Emoji","Segoe UI Symbol";
-
-@widget-height: 500px;
 
 body {
   font-family: @font;
@@ -17,9 +22,10 @@ body {
 
 .button {
   border: none;
-  padding: 7px 12px;
-  font-size: 16px;
+  padding: @button-padding;
+  font-size: @button-font-size;
   margin-left: 10px;
+  height: @button-height;
   color: @button-text-color;
   background-color: @button-color;
 
@@ -30,5 +36,12 @@ body {
 
   &.selected {
     background-color: darken(@button-color, 10%);
+  }
+}
+
+.form {
+  input[type='text'] {
+    height: @button-height;
+    padding-left: 1em;
   }
 }
