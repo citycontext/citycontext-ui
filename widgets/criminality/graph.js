@@ -193,7 +193,11 @@ var Graph = R.createClass({
     var changePeriodButton = function(period) {
       var selected  = period === this.state.period;
       var className = selected ? 'selected button' : 'button';
-      return D.button({ onClick: this.changePeriod(period), className: className }, 'By ' + period);
+      return D.button({
+        onClick: this.changePeriod(period),
+        className: className,
+        ref: 'period-' + period + '-button'
+      }, 'By ' + period);
     }.bind(this);
 
     return D.div({ className: 'criminality-graph-container' },

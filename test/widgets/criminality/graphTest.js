@@ -82,3 +82,25 @@ tape('toColors', function(t) {
     }
   );
 });
+
+tape('change graph period', function(t) {
+  t.plan(2);
+
+  t.equal(
+    graph.state.period,
+    'quarter',
+    'The initial timeframe should be "quarter"'
+  );
+
+  var button = R.findDOMNode(graph.refs['period-month-button']);
+  testUtils.Simulate.click(button);
+
+  setTimeout(function() {
+    t.equal(
+      graph.state.period,
+      'month',
+      'The timeframe after clicking should be "month"'
+    );},
+    300
+  );
+});
