@@ -13,13 +13,15 @@ var Results = R.createClass({
 
   render: function() {
     if (!this.props.data) { return D.div(); }
-    var style = this.props.show ? {} : { display: 'none' };
-    var geoJSON = JSON.parse(this.props.data.lsoa.geometry);
-    var crimeData = this.props.data.lsoa.crimes;
+    var style     = this.props.show ? {} : { display: 'none' };
+    var data      = this.props.data;
+    var geoJSON   = JSON.parse(data.lsoa.geometry);
+    var crimeData = data.lsoa.crimes;
+    var lsoaName  = data.lsoa.name;
 
-    return D.section({ className: 'criminality-results', style: style },
+    return D.section({ className: 'criminality-results results', style: style },
       D.section(null,
-        R.createElement(Header, { text: 'Criminality results' }),
+        R.createElement(Header, { text: 'Total number of crime for the LSOA ' + lsoaName }),
         D.section(null,
           R.createElement(LSOAMap, { lsoaGeoJSON: geoJSON }),
           R.createElement(Graph, { crimeData: crimeData })
