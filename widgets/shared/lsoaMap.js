@@ -37,7 +37,9 @@ var LSOAMap = R.createClass({
   },
 
   render: function() {
-    return D.div({ className: 'criminality-map-container map-container' },
+    var className = 'criminality-map-container map-container ' +
+      (this.props.size === 'half' ? 'span_6_of_12' : 'span_12_of_12');
+    return D.div({ className: className },
       D.div({ className: 'map', ref: 'map' })
     );
   }

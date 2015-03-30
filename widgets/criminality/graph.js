@@ -200,7 +200,10 @@ var Graph = R.createClass({
       }, 'By ' + period);
     }.bind(this);
 
-    return D.div({ className: 'criminality-graph-container' },
+    var className = 'criminality-graph-container ' +
+      (this.props.size === 'half' ? 'span_6_of_12' : 'span_12_of_12');
+
+    return D.div({ className: className },
       D.div({ className: 'control' },
         changePeriodButton('month'),
         changePeriodButton('quarter'),

@@ -3,6 +3,7 @@ var D = R.DOM;
 var Header = require('../shared/header');
 var Graph = require('./graph');
 var LSOAMap = require('../shared/lsoaMap');
+var config = require('../../config');
 
 var Results = R.createClass({
   displayName: 'criminality-results',
@@ -18,14 +19,23 @@ var Results = R.createClass({
     var geoJSON   = JSON.parse(data.lsoa.geometry);
     var crimeData = data.lsoa.crimes;
     var lsoaName  = data.lsoa.name;
+    var sectionEl;
+
+    if (config.mapboxMapId) {
+      sectionEl = D.section(null,
+        R.createElement(LSOAMap, { lsoaGeoJSON: geoJSON, size: 'half'}),
+        R.createElement(Graph, { crimeData: crimeData, size: 'half' })
+      );
+    } else {
+      sectionEl = D.section(null,
+        R.createElement(Graph, { crimeData: crimeData, size: 'full' })
+      );
+    }
 
     return D.section({ className: 'criminality-results results', style: style },
       D.section(null,
         R.createElement(Header, { text: 'Total number of crimes for the LSOA ' + lsoaName }),
-        D.section(null,
-          R.createElement(LSOAMap, { lsoaGeoJSON: geoJSON }),
-          R.createElement(Graph, { crimeData: crimeData })
-        )
+        sectionEl
       )
     );
   }
