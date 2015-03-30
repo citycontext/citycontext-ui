@@ -1,14 +1,14 @@
 var R = require('react');
 var D = R.DOM;
-var Results = require('./results');
 var ContainerMixin = require('../shared/containerMixin');
+var Results = require('./results');
 
 var Container = R.createClass({
-  displayName: 'criminality-container',
+  displayName: 'demographics-container',
   mixins: [ContainerMixin],
 
   render: function() {
-    return D.div({ className: 'criminality-widget-container' },
+    return D.div({ className: 'demographics-widget-container' },
       this.makeFormEl(),
 
       R.createElement(Results, {

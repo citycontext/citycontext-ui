@@ -18,6 +18,7 @@ var config = require('../../config');
 
 var Graph = R.createClass({
   propTypes: {
+    size: R.PropTypes.oneOf(['half', 'full']),
     crimeData: R.PropTypes.object
   },
 

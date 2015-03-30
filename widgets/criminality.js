@@ -6,7 +6,7 @@ function CriminalityWidget(selector, opts) {
   if (!(this instanceof CriminalityWidget)) {
     return new CriminalityWidget(selector, opts);
   }
-  this.selector  = selector;
+  this.selector          = selector;
   this.onSubmitExternal  = _opts.onSubmit;
   this.onSuccessExternal = _opts.onSuccess;
   this.onErrorExternal   = _opts.onError;

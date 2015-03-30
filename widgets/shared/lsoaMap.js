@@ -11,6 +11,7 @@ var mb = L.mapbox;
 var LSOAMap = R.createClass({
   displayName: 'lsoa-map',
   propTypes: {
+    size: R.PropTypes.oneOf(['half', 'full']),
     lsoaGeoJSON: R.PropTypes.object.isRequired
   },
 

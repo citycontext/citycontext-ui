@@ -1,11 +1,34 @@
-var tape      = require('tape');
-var R         = require('react/addons');
-var testUtils = R.addons.TestUtils;
-var Container = require('../../widgets/criminality/container.js');
-var Form      = require('../../widgets/shared/form.js');
-var Errors    = require('../../widgets/shared/errors.js');
-var Results   = require('../../widgets/criminality/results.js');
-var Promise   = require('promise');
+var tape           = require('tape');
+var R              = require('react/addons');
+var D              = R.DOM;
+var testUtils      = R.addons.TestUtils;
+var ContainerMixin = require('../../../widgets/shared/containerMixin.js');
+var Form           = require('../../../widgets/shared/form.js');
+var Errors         = require('../../../widgets/shared/errors.js');
+var Promise        = require('promise');
+
+var Results = R.createClass({
+  render: function() {
+    return D.div();
+  }
+});
+
+var Container = R.createClass({
+  mixins: [ContainerMixin],
+
+  render: function() {
+    return D.div({ className: 'demographics-widget-container' },
+      this.makeFormEl(),
+
+      R.createElement(Results, {
+        show: this.state.showResults,
+        data: this.state.data
+      }),
+
+      this.makeErrorEl()
+    );
+  }
+});
 
 var getForm = function(container) {
   return testUtils.findRenderedComponentWithType(container, Form);
