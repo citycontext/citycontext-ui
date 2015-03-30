@@ -20,20 +20,23 @@ var Statistics = R.createClass({
     ];
 
     var className = 'demographics-statistics col ' +
-      (this.props.size === 'half' ? 'span_6_of_12' : 'span_12_of_12');
+      (this.props.size === 'half' ? 'span_5_of_12' : 'span_12_of_12');
 
-    var args = fields.reduce(function(acc, fs) {
+    var rows = fields.reduce(function(acc, fs) {
       var key     = fs[0];
       var label   = fs[1];
-      var titleEl = D.dt(null, label);
-      var valueEl = D.dd(null, data[key]);
-      acc.push(titleEl);
-      acc.push(valueEl);
+      var titleEl = D.td(null, label);
+      var valueEl = D.td(null, data[key]);
+      var rowEl   = D.tr(null, titleEl, valueEl);
+      acc.push(rowEl);
       return acc;
-    }, [{ className: className }]);
+    }, [null]);
 
+    var tableEl = D.table(null,
+      D.tbody.apply(this, rows)
+    );
 
-    return D.div.apply(this, args);
+    return D.div({ className: className }, tableEl);
   }
 });
 

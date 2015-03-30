@@ -1,0 +1,21 @@
+@import 'less/theme';
+
+.demographics-statistics {
+  padding-left: 20px;
+
+  table {
+    border-spacing: 0;
+    width: 100%;
+    max-width: 100%;
+
+    tr:nth-of-type(odd) {
+      background-color: fadeout(@table-color, 80%);
+    }
+
+    td {
+      border-bottom: 1px solid @table-color;
+      line-height: 1.4em;
+      padding: 0.7em;
+    }
+  }
+}
