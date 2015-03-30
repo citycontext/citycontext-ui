@@ -21,7 +21,7 @@ var Results = R.createClass({
 
     return D.section({ className: 'criminality-results results', style: style },
       D.section(null,
-        R.createElement(Header, { text: 'Total number of crime for the LSOA ' + lsoaName }),
+        R.createElement(Header, { text: 'Total number of crimes for the LSOA ' + lsoaName }),
         D.section(null,
           R.createElement(LSOAMap, { lsoaGeoJSON: geoJSON }),
           R.createElement(Graph, { crimeData: crimeData })
