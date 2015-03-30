@@ -1,7 +1,7 @@
 var R = require('react');
 var D = R.DOM;
 var Header = require('../shared/header');
-var LSOAMap = require('../shared/lsoaMap');
+var MapboxMap = require('../shared/mapboxMap');
 var config = require('../../config');
 var Statistics = require('./statistics');
 
@@ -23,7 +23,7 @@ var Results = R.createClass({
 
     if (config.mapboxMapId) {
       sectionEl = D.section(null,
-        R.createElement(LSOAMap, { lsoaGeoJSON: geoJSON, size: 'half'}),
+        R.createElement(MapboxMap, { geoJSON: geoJSON, size: 'half'}),
         R.createElement(Statistics, { popData: popData, size: 'half' })
       );
     } else {

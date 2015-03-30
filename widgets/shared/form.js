@@ -1,6 +1,5 @@
 var R = require('react');
 var D = R.DOM;
-var Promise = require('promise');
 
 var statuses = {
   idle: 'idle',

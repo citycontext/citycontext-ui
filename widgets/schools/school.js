@@ -1,75 +1,58 @@
-var fs     = require('fs');
-var jade   = require('jade');
-var utils  = require('../../utils');
+var R = require('react');
+var D = R.DOM;
+var Types = R.PropTypes;
+var MarkType = Types.oneOf([1,2,3,4]).isRequired;
 
-var schoolTemplate = fs.readFileSync(__dirname + '/templates/school.jade', 'utf-8');
-var schoolHTML     = jade.compile(schoolTemplate);
+var School = R.createClass({
+  displayName: 'school',
 
-function School(schoolData, container) {
-  if (!(this instanceof School)) {
-    return new School(schoolData, container);
+  propType: {
+    name: Types.string.isRequired,
+    distanceMetres: Types.number.isRequired,
+    overallEffectiveness: MarkType,
+    qualityOfTeaching: MarkType,
+    leadershipAndManagement: MarkType,
+    lastInspectionUrl: Types.string.isRequired
+  },
+
+  getShortName: function() {
+    var name = this.props.name;
+    var maxLength = 30;
+
+    if (name.length <= maxLength) {
+      return name;
+    }
+    return name.substr(0, maxLength-3) + '…';
+  },
+
+  getFormattedDistanceMiles: function() {
+    return (this.props.distanceMetres / 1609.344).toPrecision(2).toString() + ' miles';
+  },
+
+
+  render: function() {
+    return D.div({ className: 'school-details' },
+      D.div({ className: 'school-details-heading' },
+        D.h5(null,
+          D.a({ href: '#' }, this.getShortName()),
+          D.p({ className: 'school-details-distance' }, this.getFormattedDistanceMiles())
+        )
+      ),
+      D.div({ className: 'school-details-body' },
+        D.dl({ className: 'school-details-performance' },
+          D.dt(null, 'Overall effectiveness'),
+          D.dd(null, this.props.overallEffectiveness),
+          D.dt(null, 'Quality of teaching'),
+          D.dd(null, this.props.qualityOfTeaching),
+          D.dt(null, 'Leadership'),
+          D.dd(null, this.props.leadershipAndManagement)
+        ),
+        D.p({ className: 'school-details-url' },
+          D.a({ href: this.props.lastInspectionUrl }, 'Full Ofsted report')
+        )
+      )
+    );
   }
-
-  // number goes from 1 (best) to 4 (worst)
-  var mark = function mark(number) {
-    var nFullCircles = 5 - number,
-        nEmptyCircle = number - 1,
-        circles      = "";
-
-    for (var i = 0; i < nFullCircles; i++) {
-      circles += '<div class="circle full-circle"></div>';
-    }
-
-    for (var j = 0; j < nEmptyCircle; j++) {
-      circles += '<div class="circle empty-circle"></div>';
-    }
-
-    return circles;
-  };
-
-  var shorten = function shorten(text, maxLength) {
-    var ret = text;
-    if (ret.length > maxLength) {
-      ret = ret.substr(0, maxLength-3) + "&hellip;";
-    }
-    return ret;
-  };
-
-  var formatDistance = function formatDistance(metres, precision) {
-    return (metres / 1609.344).toPrecision(precision).toString() + ' miles';
-  };
-
-  this.schoolData                  = schoolData;
-  this.urn                         = schoolData.urn;
-  this.id                          = 'school-' + this.urn;
-  this.label                       = shorten(this.schoolData.schoolName, 30);
-  this.distance                    = formatDistance(this.schoolData.distanceMetres, 2);
-  this.overallEffectivenessMark    = mark(this.schoolData.overallEffectiveness);
-  this.qualityOfTeachingMark       = mark(this.schoolData.qualityOfTeaching);
-  this.leadershipAndManagementMark = mark(this.schoolData.leadershipAndManagement);
-  this.lastInspectionUrl           = this.schoolData.lastInspectionUrl;
-  this.container                   = container;
-  this.active                      = false;
-
-  this.toggleActive = function() {
-    var customEventInit = { detail: { schoolURN: this.urn } };
-    var typeArg = this.active ? 'citycontext.schoolDeactivated' : 'citycontext.schoolActivated';
-    var event = new CustomEvent(typeArg, customEventInit);
-    document.dispatchEvent(event);
-    this.active = !this.active;
-  };
-}
-
-School.prototype.render = function() {
-  var schoolEl = utils.fromHTML(schoolHTML({ school: this }))[0];
-  this.container.appendChild(schoolEl);
-  var headingEl     = schoolEl.querySelector('.school-heading');
-  var descriptionEl = schoolEl.querySelector('.school-description');
-
-  headingEl.addEventListener('click', function() {
-    descriptionEl.classList.toggle('expanded');
-    this.toggleActive();
-  }.bind(this));
-};
+});
 
 module.exports = School;

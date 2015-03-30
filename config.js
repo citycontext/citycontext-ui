@@ -5,6 +5,8 @@ module.exports = {
   mapboxMapId: undefined,
   mapboxToken: undefined,
 
+  mapMarkersColor: '#409840',
+
   chartsOptions: {
     global: {
       responsive: true

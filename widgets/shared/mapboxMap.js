@@ -8,37 +8,39 @@ require('mapbox.js');
 // L is provided by mapbox
 var mb = L.mapbox;
 
-var LSOAMap = R.createClass({
-  displayName: 'lsoa-map',
+var MapboxMap = R.createClass({
+  displayName: 'map',
+
   propTypes: {
     size: R.PropTypes.oneOf(['half', 'full']),
-    lsoaGeoJSON: R.PropTypes.object.isRequired
+    geoJSON: R.PropTypes.object.isRequired
   },
 
   getInitialState: function() {
     return {
       map: null,
-      lsoaLayer: null
+      layer: null
     };
   },
 
   componentDidMount: function() {
     mb.accessToken = config.mapboxToken;
     var map = mb.map(R.findDOMNode(this.refs.map), config.mapboxMapId);
-    var lsoaLayer = mb.featureLayer().addTo(map);
+    var layer = mb.featureLayer().addTo(map);
     this.setState({
       map: map,
-      lsoaLayer: lsoaLayer
+      layer: layer
     });
   },
 
   componentDidUpdate: function() {
-    this.state.lsoaLayer.setGeoJSON(this.props.lsoaGeoJSON);
-    this.state.map.fitBounds(this.state.lsoaLayer.getBounds());
+    this.state.layer.setGeoJSON(this.props.geoJSON);
+    this.state.map.fitBounds(this.state.layer.getBounds());
   },
 
+
   render: function() {
-    var className = 'criminality-map-container map-container ' +
+    var className = 'map-container ' +
       (this.props.size === 'half' ? 'span_6_of_12' : 'span_12_of_12');
     return D.div({ className: className },
       D.div({ className: 'map', ref: 'map' })
@@ -46,4 +48,4 @@ var LSOAMap = R.createClass({
   }
 });
 
-module.exports = LSOAMap;
+module.exports = MapboxMap;

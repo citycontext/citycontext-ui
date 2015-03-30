@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'></meta>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
+    <link href="../dist/citycontext-ui.min.css" rel="stylesheet" type="text/css">
+    <style>
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Schools</h2>
+      <div id="schools-widget"></div>
+    </div>
+
+    <script src="../dist/citycontext-ui.min.js"></script>
+    <script>
+      (function() {
+        citycontext.config.userKey     = 'my City Context user key';
+        citycontext.config.mapboxMapId = 'my Mapbox map id';
+        citycontext.config.mapboxToken = 'my Mapbox token';
+
+        citycontext.SchoolsWidget('#schools-widget').render();
+      })();
+    </script>
+  </body>
+</html>
+
+
