@@ -2,11 +2,12 @@ var R = require('react');
 var D = R.DOM;
 var Types = R.PropTypes;
 var MarkType = Types.oneOf([1,2,3,4]).isRequired;
+var SchoolPerformance = require('./performance');
 
 var School = R.createClass({
   displayName: 'school',
 
-  propType: {
+  propTypes: {
     name: Types.string.isRequired,
     distanceMetres: Types.number.isRequired,
     overallEffectiveness: MarkType,
@@ -35,17 +36,17 @@ var School = R.createClass({
       D.div({ className: 'school-details-heading' },
         D.h5(null,
           D.a({ href: '#' }, this.getShortName()),
-          D.p({ className: 'school-details-distance' }, this.getFormattedDistanceMiles())
+          D.span({ className: 'school-details-distance' }, this.getFormattedDistanceMiles())
         )
       ),
       D.div({ className: 'school-details-body' },
         D.dl({ className: 'school-details-performance' },
           D.dt(null, 'Overall effectiveness'),
-          D.dd(null, this.props.overallEffectiveness),
+          R.createElement(SchoolPerformance, { score: this.props.overallEffectiveness }),
           D.dt(null, 'Quality of teaching'),
-          D.dd(null, this.props.qualityOfTeaching),
+          R.createElement(SchoolPerformance, { score: this.props.qualityOfTeaching }),
           D.dt(null, 'Leadership'),
-          D.dd(null, this.props.leadershipAndManagement)
+          R.createElement(SchoolPerformance, { score: this.props.leadershipAndManagement })
         ),
         D.p({ className: 'school-details-url' },
           D.a({ href: this.props.lastInspectionUrl }, 'Full Ofsted report')

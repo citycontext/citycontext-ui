@@ -6,26 +6,26 @@ var Phase = R.createClass({
   displayName: 'school-phase',
 
   propTypes: {
-    schools: R.PropTypes.array.isRequired,
-    name: R.PropTypes.string.isRequired,
+    schools:    R.PropTypes.array.isRequired,
+    name:       R.PropTypes.string.isRequired,
     activeURNs: R.PropTypes.array.isRequired,
-    expanded: R.PropTypes.bool.isRequired
+    expanded:   R.PropTypes.bool.isRequired
   },
 
   render: function() {
     var headerEl = D.h4(null, this.props.name);
     var schoolsEl = this.props.schools.map(function(schoolData) {
       return R.createElement(School, {
-        name: schoolData.schoolName,
-        distanceMetres: schoolData.distanceMetres,
-        overallEffectiveness: schoolData.overallEffectiveness,
-        qualityOfTeaching: schoolData.qualityOfTeaching,
+        name:                    schoolData.schoolName,
+        distanceMetres:          schoolData.distanceMetres,
+        overallEffectiveness:    schoolData.overallEffectiveness,
+        qualityOfTeaching:       schoolData.qualityOfTeaching,
         leadershipAndManagement: schoolData.leadershipAndManagement,
-        lastInspectionUrl: schoolData.lastInspectionUrl
+        lastInspectionUrl:       schoolData.lastInspectionUrl
       });
     }, this);
 
-    var args = [null, headerEl];
+    var args = [{ className: 'school-phase' }, headerEl];
     schoolsEl.forEach(function(el) {
       args.push(el);
     });

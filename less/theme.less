@@ -4,6 +4,11 @@
 
 @font: Helvetica,arial,nimbussansl,liberationsans,freesans,clean,sans-serif,"Segoe UI Emoji","Segoe UI Symbol";
 
+@text-color: black;
+
+@link-color: @main-color;
+@link-color-hover: darken(@main-color, 20%);
+
 // Buttons
 @button-text-color: white;
 @button-color: @main-color;
@@ -20,6 +25,20 @@
 
 .citycontext-ui {
   font-family: @font;
+  color: @text-color;
+
+  a {
+    color: @link-color;
+    text-decoration: none;
+
+    &:hover {
+      color: @link-color-hover;
+    }
+  }
+
+  h5 {
+    font-size: 0.8em;
+  }
 
   .button {
     background-color: @button-color;
