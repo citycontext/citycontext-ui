@@ -5,6 +5,9 @@
     <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.5/mapbox.css' rel='stylesheet' />
     <link href="../dist/citycontext-ui.min.css" rel="stylesheet" type="text/css">
     <style>
+      body {
+        padding-bottom: 500px;
+      }
       .container {
         max-width: 900px;
         margin: 0 auto;
@@ -17,6 +20,16 @@
       <div id="criminality-widget"></div>
     </div>
 
+    <div class="container">
+      <h2>Schools</h2>
+      <div id="schools-widget"></div>
+    </div>
+
+    <div class="container">
+      <h2>Demographics</h2>
+      <div id="demographics-widget"></div>
+    </div>
+
     <script src="../dist/citycontext-ui.min.js"></script>
     <script>
       (function() {
@@ -24,12 +37,13 @@
         citycontext.config.mapboxMapId = 'my Mapbox map id';
         citycontext.config.mapboxToken = 'my Mapbox token';
 
-        citycontext.CriminalityWidget('#criminality-widget', {
-          onSuccess: function(input) {
-            console.log('Lookup successful for postcode ' + input);
-          }
-        }).render();
+        citycontext.CriminalityWidget('#criminality-widget').render();
+        citycontext.SchoolsWidget('#schools-widget').render();
+        citycontext.DemographicsWidget('#demographics-widget').render();
       })();
     </script>
   </body>
 </html>
+
+
+
