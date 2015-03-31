@@ -6,10 +6,7 @@ var Promise = require('promise');
 
 var ContainerMixin = {
   propTypes: {
-    onSubmitExternal:  R.PropTypes.func,
-    onSuccessExternal: R.PropTypes.func,
-    onErrorExternal:   R.PropTypes.func,
-    client:            R.PropTypes.object
+    client: R.PropTypes.object
   },
 
   getInitialState: function() {
@@ -53,9 +50,6 @@ var ContainerMixin = {
   makeFormEl: function() {
     return R.createElement(Form, {
       onSubmit: this.query,
-      onSubmitExternal:  this.props.onSubmitExternal,
-      onSuccessExternal: this.props.onSuccessExternal,
-      onErrorExternal:   this.props.onErrorExternal
     });
   },
 

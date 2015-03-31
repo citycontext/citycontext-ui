@@ -11,9 +11,6 @@ var Form = R.createClass({
   propTypes: {
     // a callback that takes as argument the text input value
     onSubmit: R.PropTypes.func,
-    onSubmitExternal:  R.PropTypes.func,
-    onSuccessExternal: R.PropTypes.func,
-    onErrorExternal:   R.PropTypes.func
   },
 
   getInitialState: function() {
@@ -28,23 +25,28 @@ var Form = R.createClass({
 
     var input = this.refs.input.getDOMNode().value;
 
+
+    var submitEvent = new CustomEvent('citycontext-ui.submit', {
+      detail: { input: input },
+      bubbles: true
+    });
+    this.getDOMNode().dispatchEvent(submitEvent);
+    var promise = this.props.onSubmit(input);
+
     var self = this;
-
-    if (this.props.onSubmitExternal) {
-      this.props.onSubmitExternal(input);
-    }
-
-    var promise = self.props.onSubmit(input);
-
     promise
       .then(function () {
-        if (self.props.onSuccessExternal) {
-          self.props.onSuccessExternal(input);
-        }
+        var successEvent = new CustomEvent('citycontext-ui.success', {
+          detail: { input: input },
+          bubbles: true
+        });
+        self.getDOMNode().dispatchEvent(successEvent);
       }, function(error) {
-        if (self.props.onErrorExternal) {
-          self.props.onErrorExternal(error);
-        }
+        var errorEvent = new CustomEvent('citycontext-ui.error', {
+          detail: { error: error },
+          bubbles: true
+        });
+        self.getDOMNode().dispatchEvent(errorEvent);
       })
       .then(function() {
         self.setState({ status: statuses.idle });

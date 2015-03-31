@@ -24,7 +24,16 @@
         citycontext.config.mapboxMapId = 'my Mapbox map id';
         citycontext.config.mapboxToken = 'my Mapbox token';
 
+        citycontext.config.userKey     = '0d829d4fb9831e7bc32d5b0d233a2c9e';
+        citycontext.config.mapboxMapId = 'rentable.k15m29he';
+        citycontext.config.mapboxToken = 'pk.eyJ1IjoicmVudGFibGUiLCJhIjoiNnFqUXgzUSJ9.xh6htS8Vscyxyf89mCSn6Q';
+        citycontext.config.baseUrl     = 'http://localhost:8080/beta/postcodes';
+
         citycontext.SchoolsWidget('#schools-widget').render();
+
+        document.querySelector('#schools-widget').addEventListener('citycontext-ui.success', function(e) {
+          console.log('Successful query for ' + e.detail.input);
+        });
       })();
     </script>
   </body>

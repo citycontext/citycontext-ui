@@ -1,23 +1,15 @@
 var R = require('react');
 var Container = require('./schools/container');
 
-function SchoolsWidget(selector, opts) {
-  var _opts = opts || {};
+function SchoolsWidget(selector) {
   if (!(this instanceof SchoolsWidget)) {
-    return new SchoolsWidget(selector, opts);
+    return new SchoolsWidget(selector);
   }
-  this.selector          = selector;
-  this.onSubmitExternal  = _opts.onSubmit;
-  this.onSuccessExternal = _opts.onSuccess;
-  this.onErrorExternal   = _opts.onError;
+  this.selector = selector;
 }
 
 SchoolsWidget.prototype.render = function() {
-  var container = R.createElement(Container, {
-    onSubmitExternal:  this.onSubmitExternal,
-    onSuccessExternal: this.onSuccessExternal,
-    onErrorExternal:   this.onErrorExternal
-  });
+  var container = R.createElement(Container);
 
   R.render(
     container, document.querySelector(this.selector)
