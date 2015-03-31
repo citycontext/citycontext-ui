@@ -5,24 +5,42 @@
     padding-left: 30px;
 
     .school-phase {
-      h4 {
-        margin-top: 0;
+      &:first-child {
+        h4 {
+          margin-top: 0;
+        }
       }
 
       .school-details {
         border-bottom: solid 1px #B2B2B2;
+        margin-left: 1.5em;
 
         .school-details-heading {
-          .school-details-distance {
-            font-weight: normal;
-            float: right;
+          h5 {
+            margin: 1em 0;
+
+            .caret {
+              margin-right: 10px;
+              display: inline-block;
+              transition: transform 0.5s;
+
+              &.caret-expanded {
+                transform: rotate(90deg);
+                //hack to fix aliasing in Chrome
+                -webkit-transform-origin: 50% 53%;
+              }
+            }
+
+            .school-details-distance {
+              font-weight: normal;
+              float: right;
+            }
           }
         }
 
         .school-details-body {
           transition: height 0.5s;
-          //height: 0px;
-          height: 120px;
+          height: 0px;
           overflow: hidden;
 
           &.expanded {
@@ -68,8 +86,9 @@
               background-color: @main-color;
             }
 
+            //clearfix
             &:after {
-              content: "";
+              content: " ";
               display: table;
               clear: both;
             }

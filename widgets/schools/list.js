@@ -7,7 +7,6 @@ var List = R.createClass({
   displayName: 'schools-list',
 
   propTypes: {
-    size: Types.oneOf(['half', 'full']),
     activeURNs: Types.arrayOf(Types.number).isRequired,
     schools: Types.arrayOf(Types.object).isRequired
   },
@@ -33,7 +32,6 @@ var List = R.createClass({
           schools: schoolsInPhase,
           name: phaseName,
           activeURNs: self.props.activeURNs,
-          expanded: self.props.size === 'full'
         });
         acc.push(phaseEl);
       }
@@ -42,10 +40,7 @@ var List = R.createClass({
   },
 
   render: function() {
-    var className = 'list-container col ' +
-      (this.props.size === 'half' ? 'span_5_of_12' : 'span_12_of_12');
-
-    var args = [{ className: className }];
+    var args = [{ className: 'list-container col span_5_of_12' }];
 
     this.getPhases().forEach(function(phase) {
       args.push(phase);

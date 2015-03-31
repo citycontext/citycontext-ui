@@ -8,20 +8,22 @@ var Phase = R.createClass({
   propTypes: {
     schools:    R.PropTypes.array.isRequired,
     name:       R.PropTypes.string.isRequired,
-    activeURNs: R.PropTypes.array.isRequired,
-    expanded:   R.PropTypes.bool.isRequired
+    activeURNs: R.PropTypes.array.isRequired
   },
 
   render: function() {
     var headerEl = D.h4(null, this.props.name);
     var schoolsEl = this.props.schools.map(function(schoolData) {
+      var isActive = this.props.activeURNs.indexOf(schoolData.urn) > -1;
       return R.createElement(School, {
         name:                    schoolData.schoolName,
         distanceMetres:          schoolData.distanceMetres,
         overallEffectiveness:    schoolData.overallEffectiveness,
         qualityOfTeaching:       schoolData.qualityOfTeaching,
         leadershipAndManagement: schoolData.leadershipAndManagement,
-        lastInspectionUrl:       schoolData.lastInspectionUrl
+        lastInspectionUrl:       schoolData.lastInspectionUrl,
+        active:                  isActive,
+        urn:                     schoolData.urn
       });
     }, this);
 

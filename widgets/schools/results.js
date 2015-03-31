@@ -18,6 +18,29 @@ var Results = R.createClass({
     };
   },
 
+  toggleActive: function(urn) {
+    var i = this.state.activeURNs.indexOf(urn);
+    if (i < 0) {
+      this.state.activeURNs.push(urn);
+    } else {
+      this.state.activeURNs.splice(i, 1);
+    }
+    this.forceUpdate();
+  },
+
+  componentDidMount: function() {
+    var results = this;
+    this.getDOMNode().addEventListener('citycontext-ui.activate-school', function(e) {
+      e.stopPropagation();
+      results.toggleActive(e.detail.urn);
+      console.log('activate school: ' + e.detail.urn);
+    });
+  },
+
+  componentWillReceiveProps: function() {
+    this.setState({ activeURNs: [] });
+  },
+
   isActive: function(school) {
     return this.state.activeURNs.indexOf(school.urn) > -1;
   },
@@ -74,18 +97,19 @@ var Results = R.createClass({
   },
 
   render: function() {
-    if (!this.props.data) { return D.div(); }
-    var style     = this.props.show ? {} : { display: 'none' };
+    if (!this.props.data) { return D.section({ className: 'results' }); }
+
+    var style = this.props.show ? {} : { display: 'none' };
     var sectionEl;
 
     if (config.mapboxMapId) {
       sectionEl = D.section(null,
         R.createElement(MapboxMap, { size: 'half', geoJSON: this.getGeoJSON() }),
-        this.schoolListEl('half')
+        this.schoolListEl()
       );
     } else {
       sectionEl = D.section(null,
-        this.schoolListEl('full')
+        this.schoolListEl()
       );
     }
 
@@ -99,4 +123,3 @@ var Results = R.createClass({
 });
 
 module.exports = Results;
-

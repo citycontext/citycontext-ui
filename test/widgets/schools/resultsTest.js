@@ -109,3 +109,22 @@ tape('getGeoJSON', function(t) {
     }
   );
 });
+
+tape('toggleActive', function(t) {
+  t.plan(2);
+  results.setState({ activeURNs: [] });
+
+  results.toggleActive(1);
+  t.deepEqual(
+    results.state.activeURNs,
+    [1],
+    'The urn 1 should be active'
+  );
+
+  results.toggleActive(1);
+  t.deepEqual(
+    results.state.activeURNs,
+    [],
+    'The urn 1 should not be active'
+  );
+});
