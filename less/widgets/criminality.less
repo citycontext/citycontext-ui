@@ -1,33 +1,34 @@
 @import 'less/theme';
 @import 'less/grid';
 
-.criminality-graph-container {
-  height: @widget-height - 70px;
-  position: relative;
-  &:extend(.col);
-  .criminality-graph {
-    margin-left: 40px;
-  }
+.citycontext-ui.criminality-widget-container {
+  .graph-container {
+    height: @widget-height - 70px;
+    position: relative;
+    .graph {
+      margin-left: 40px;
+    }
 
-  .control {
-    margin-bottom: 20px;
-    float: right;
-  }
+    .control {
+      margin-bottom: 20px;
+      float: right;
+    }
 
-  .legend {
-    float: right;
-    .legend-item {
-      margin-left: 30px;
-      float: left;
-      .legend-color {
-        width: 1em;
-        height: 1em;
-        margin-right: 8px;
+    .legend {
+      float: right;
+      .legend-item {
+        margin-left: 30px;
         float: left;
-      }
+        .legend-color {
+          width: 1em;
+          height: 1em;
+          margin-right: 8px;
+          float: left;
+        }
 
-      .legend-text {
-        float: left;
+        .legend-text {
+          float: left;
+        }
       }
     }
   }

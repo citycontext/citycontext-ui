@@ -1,13 +1,15 @@
 @import 'less/theme';
 
-.map-container {
-  padding-bottom: 20px;
-  &:extend(.col);
+.citycontext-ui {
+  .map-container {
+    padding-bottom: 20px;
+    &:extend(.col);
 
-  .map {
-    position: relative;
-    bottom:   0;
-    width:    100%;
-    height:   @widget-height;
+    .map {
+      bottom:   0;
+      height:   @widget-height;
+      position: relative;
+      width:    100%;
+    }
   }
 }

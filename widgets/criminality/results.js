@@ -32,7 +32,7 @@ var Results = R.createClass({
       );
     }
 
-    return D.section({ className: 'criminality-results results', style: style },
+    return D.section({ className: 'results', style: style },
       D.section(null,
         R.createElement(Header, { text: 'Total number of crimes for the LSOA ' + lsoaName }),
         sectionEl

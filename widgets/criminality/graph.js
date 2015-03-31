@@ -201,7 +201,7 @@ var Graph = R.createClass({
       }, 'By ' + period);
     }.bind(this);
 
-    var className = 'criminality-graph-container ' +
+    var className = 'graph-container col ' +
       (this.props.size === 'half' ? 'span_6_of_12' : 'span_12_of_12');
 
     return D.div({ className: className },
@@ -215,7 +215,7 @@ var Graph = R.createClass({
         legendItem(1),
         legendItem(2)
       ),
-      D.canvas({ className: 'criminality-graph', ref: 'graph' })
+      D.canvas({ className: 'graph', ref: 'graph' })
     );
   }
 });

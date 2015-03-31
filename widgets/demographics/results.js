@@ -32,7 +32,7 @@ var Results = R.createClass({
       );
     }
 
-    return D.section({ className: 'demographics-results results', style: style },
+    return D.section({ className: 'results', style: style },
       D.section(null,
         R.createElement(Header, { text: 'Demographics data for the LSOA ' + lsoaName }),
         sectionEl

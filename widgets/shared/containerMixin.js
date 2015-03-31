@@ -1,5 +1,4 @@
 var R       = require('react');
-var D       = R.DOM;
 var Form    = require('../shared/form');
 var Errors  = require('../shared/errors');
 var client  = require('../../client');
@@ -21,6 +20,10 @@ var ContainerMixin = {
       showResults: false,
       showErrors: false
     };
+  },
+
+  componentDidMount: function() {
+    this.getDOMNode().classList.add('citycontext-ui');
   },
 
   query: function(val) {

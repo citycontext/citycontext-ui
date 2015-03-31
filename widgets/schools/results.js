@@ -89,7 +89,7 @@ var Results = R.createClass({
       );
     }
 
-    return D.section({ className: 'schools-results results', style: style },
+    return D.section({ className: 'results', style: style },
       D.section(null,
         R.createElement(Header, { text: 'Nearby schools' }),
         sectionEl

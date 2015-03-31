@@ -18,32 +18,32 @@
 
 @table-color: #CCC;
 
-body {
+.citycontext-ui {
   font-family: @font;
-}
 
-.button {
-  border: none;
-  padding: @button-padding;
-  font-size: @button-font-size;
-  margin-left: 10px;
-  height: @button-height;
-  color: @button-text-color;
-  background-color: @button-color;
-
-  &:hover {
-    background-color: darken(@button-color, 5%);
-    cursor: pointer;
-  }
-
-  &.selected {
-    background-color: darken(@button-color, 10%);
-  }
-}
-
-.form {
-  input[type='text'] {
+  .button {
+    background-color: @button-color;
+    border: none;
+    color: @button-text-color;
+    font-size: @button-font-size;
     height: @button-height;
-    padding-left: 1em;
+    margin-left: 10px;
+    padding: @button-padding;
+
+    &:hover {
+      background-color: darken(@button-color, 5%);
+      cursor: pointer;
+    }
+
+    &.selected {
+      background-color: darken(@button-color, 10%);
+    }
+  }
+
+  .form {
+    input[type='text'] {
+      height: @button-height;
+      padding-left: 1em;
+    }
   }
 }

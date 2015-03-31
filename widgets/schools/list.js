@@ -42,7 +42,7 @@ var List = R.createClass({
   },
 
   render: function() {
-    var className = 'school-list-container col ' +
+    var className = 'list-container col ' +
       (this.props.size === 'half' ? 'span_6_of_12' : 'span_12_of_12');
 
     var args = [{ className: className }];

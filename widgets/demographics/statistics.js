@@ -19,7 +19,7 @@ var Statistics = R.createClass({
       ['communalEstablishmentResidents', 'Number of communal establishment residents']
     ];
 
-    var className = 'demographics-statistics col ' +
+    var className = 'statistics col ' +
       (this.props.size === 'half' ? 'span_5_of_12' : 'span_12_of_12');
 
     var rows = fields.reduce(function(acc, fs) {

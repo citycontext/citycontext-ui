@@ -40,7 +40,7 @@ var MapboxMap = R.createClass({
 
 
   render: function() {
-    var className = 'map-container ' +
+    var className = 'map-container col ' +
       (this.props.size === 'half' ? 'span_6_of_12' : 'span_12_of_12');
     return D.div({ className: className },
       D.div({ className: 'map', ref: 'map' })
