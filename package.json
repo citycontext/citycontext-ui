@@ -4,7 +4,7 @@
   "description": "City Context widgets",
   "main": "index.js",
   "scripts": {
-    "test": "browserify `find test -name '*Test.js'` | testling -x google-chrome"
+    "test": "tape `find . -name 'test/*Test.js'`"
   },
   "repository": {
     "type": "git",
@@ -27,9 +27,21 @@
     "install": "^0.1.8",
     "jshint": "^2.6.3",
     "npm": "^2.7.3",
-    "testling": "^1.7.1",
     "uglify-js": "^2.4.17",
     "yuicompressor": "^2.4.8"
+  },
+  "testling": {
+    "files": "test/*.js",
+    "browsers": [
+      "ie/6..latest",
+      "chrome/22..latest",
+      "firefox/16..latest",
+      "safari/latest",
+      "opera/11.0..latest",
+      "iphone/6",
+      "ipad/6",
+      "android-browser/latest"
+    ]
   },
   "dependencies": {
     "chart.js": "^1.0.2",
