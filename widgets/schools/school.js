@@ -71,7 +71,7 @@ var School = R.createClass({
           R.createElement(SchoolPerformance, { score: this.props.leadershipAndManagement })
         ),
         D.p({ className: 'school-details-url' },
-          D.a({ href: this.props.lastInspectionUrl }, 'Full Ofsted report')
+          D.a({ href: this.props.lastInspectionUrl, target: '_blank' }, 'Full Ofsted report')
         )
       )
     );
