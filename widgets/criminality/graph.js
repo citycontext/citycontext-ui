@@ -3,19 +3,6 @@ var D = R.DOM;
 var Chart = require('chart.js');
 var config = require('../../config');
 
-(function mergeChartOptions() {
-  for (var i in config.chartsOptions) {
-    if (config.chartsOptions.hasOwnProperty(i)) {
-      for (var j in config.chartsOptions[i]) {
-        if (config.chartsOptions[i].hasOwnProperty(j)) {
-          Chart.defaults[i][j] = config.chartsOptions[i][j];
-        }
-      }
-    }
-  }
-})();
-
-
 var Graph = R.createClass({
   propTypes: {
     size: R.PropTypes.oneOf(['half', 'full']),
@@ -29,6 +16,15 @@ var Graph = R.createClass({
       period: 'quarter'
     };
   },
+
+  mergeChartOptions: function() {
+    Object.keys(config.chartsOptions).forEach(function(i) {
+      Object.keys(config.chartsOptions[i]).forEach(function(j) {
+          Chart.defaults[i][j] = config.chartsOptions[i][j];
+      });
+    });
+  },
+
 
   toColors: function(rgba) {
     var template = 'rgba(' + rgba.join(',') + ',$opacity)';
@@ -171,6 +167,8 @@ var Graph = R.createClass({
     if (!this.props.crimeData) {
       return D.div();
     }
+
+    this.mergeChartOptions();
 
     var years = this.getPointsBy('year').map(function(x) { return x[0]; });
     var colors = [0, 1, 2].map(function(i) {
