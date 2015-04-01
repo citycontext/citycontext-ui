@@ -1,38 +1,38 @@
 //Main colors
-@background-color: #FFF;
-@main-color: #40983F;
+@citycontext-ui-background-color: #FFF;
+@citycontext-ui-main-color: #40983F;
 
-@font: Helvetica,arial,nimbussansl,liberationsans,freesans,clean,sans-serif,"Segoe UI Emoji","Segoe UI Symbol";
+@citycontext-ui-font: Helvetica,arial,nimbussansl,liberationsans,freesans,clean,sans-serif,"Segoe UI Emoji","Segoe UI Symbol";
 
-@text-color: black;
+@citycontext-ui-text-color: black;
 
-@link-color: @main-color;
-@link-color-hover: darken(@main-color, 20%);
+@citycontext-ui-link-color: @citycontext-ui-main-color;
+@citycontext-ui-link-color-hover: darken(@citycontext-ui-main-color, 20%);
 
 // Buttons
-@button-text-color: white;
-@button-color: @main-color;
-@button-height: 2em;
-@button-padding: 7px 12px;
-@button-font-size: 1em;
+@citycontext-ui-button-text-color: white;
+@citycontext-ui-button-color: @citycontext-ui-main-color;
+@citycontext-ui-button-height: 2em;
+@citycontext-ui-button-padding: 7px 12px;
+@citycontext-ui-button-font-size: 1em;
 
-@widget-height: 500px;
-@spinner-color: #CCC;
+@citycontext-ui-widget-height: 500px;
+@citycontext-ui-spinner-color: #CCC;
 
-@chart-y-axis-color: black;
+@citycontext-ui-chart-y-axis-color: black;
 
-@table-color: #CCC;
+@citycontext-ui-table-color: #CCC;
 
 .citycontext-ui {
-  font-family: @font;
-  color: @text-color;
+  font-family: @citycontext-ui-font;
+  color: @citycontext-ui-text-color;
 
   a {
-    color: @link-color;
+    color: @citycontext-ui-link-color;
     text-decoration: none;
 
     &:hover {
-      color: @link-color-hover;
+      color: @citycontext-ui-link-color-hover;
     }
   }
 
@@ -41,27 +41,27 @@
   }
 
   .button {
-    background-color: @button-color;
+    background-color: @citycontext-ui-button-color;
     border: none;
-    color: @button-text-color;
-    font-size: @button-font-size;
-    height: @button-height;
+    color: @citycontext-ui-button-text-color;
+    font-size: @citycontext-ui-button-font-size;
+    height: @citycontext-ui-button-height;
     margin-left: 10px;
-    padding: @button-padding;
+    padding: @citycontext-ui-button-padding;
 
     &:hover {
-      background-color: darken(@button-color, 5%);
+      background-color: darken(@citycontext-ui-button-color, 5%);
       cursor: pointer;
     }
 
     &.selected {
-      background-color: darken(@button-color, 10%);
+      background-color: darken(@citycontext-ui-button-color, 10%);
     }
   }
 
   .form {
     input[type='text'] {
-      height: @button-height;
+      height: @citycontext-ui-button-height;
       padding-left: 1em;
     }
   }
