@@ -12,7 +12,7 @@ MAIN_JS            = index.js
 BUNDLE_JS          = build/citycontext-ui.js
 JS_TARGET          = dist/citycontext-ui.min.js
 
-all: js css
+all: npm_install test js css
 
 css: $(CSS_TARGET) $(CSS_STAGING_TARGET)
 
@@ -31,7 +31,7 @@ $(CSS_MAIN_NO_PREFIX): $(MAIN_LESS) | build
 	lessc $< > $@
 
 .PHONY: js
-js: clean_js npm_install $(JS_TARGET) $(JS_STAGING_TARGET)
+js: clean_js $(JS_TARGET) $(JS_STAGING_TARGET)
 
 .PHONY: $(JS_TARGET)
 $(JS_TARGET): $(BUNDLE_JS) | dist
@@ -52,3 +52,7 @@ clean: clean_js
 
 clean_js:
 	rm -rf dist build
+
+.PHONY: test
+test:
+	npm test

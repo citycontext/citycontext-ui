@@ -4,7 +4,7 @@
   "description": "City Context widgets",
   "main": "index.js",
   "scripts": {
-    "test": "browserify `find test -name '*Test.js'` | testling -x google-chrome"
+    "test": "mkdir -p test/build && browserify `find test -name '*Test.js'` > test/build/test.js && phantomjs test/testRunner.js"
   },
   "repository": {
     "type": "git",
@@ -21,12 +21,13 @@
   "homepage": "https://github.com/citycontext/citycontext-ui",
   "readme": "README.md",
   "devDependencies": {
-    "tape": "^3.5.0",
     "autoprefixer": "^5.1.0",
     "browserify": "^9.0.3",
     "install": "^0.1.8",
     "jshint": "^2.6.3",
     "npm": "^2.7.3",
+    "phantomjs": "^1.9.16",
+    "tape": "^3.5.0",
     "testling": "^1.7.1",
     "uglify-js": "^2.4.17",
     "yuicompressor": "^2.4.8"
