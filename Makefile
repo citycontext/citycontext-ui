@@ -28,7 +28,7 @@ $(CSS_MAIN): $(CSS_MAIN_NO_PREFIX) | dist
 
 .PHONY: $(CSS_MAIN_NO_PREFIX)
 $(CSS_MAIN_NO_PREFIX): $(MAIN_LESS) | build
-	lessc $< > $@
+	$(NODE_BIN)/lessc $< > $@
 
 .PHONY: js
 js: clean_js $(JS_TARGET) $(JS_STAGING_TARGET)
