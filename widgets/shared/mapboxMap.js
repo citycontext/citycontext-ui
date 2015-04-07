@@ -26,6 +26,8 @@ var MapboxMap = R.createClass({
   componentDidMount: function() {
     mb.accessToken = config.mapboxToken;
     var map = mb.map(R.findDOMNode(this.refs.map), config.mapboxMapId);
+    map.scrollWheelZoom.disable();
+    map.dragging.disable();
     var layer = mb.featureLayer().addTo(map);
     this.setState({
       map: map,
