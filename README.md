@@ -2,6 +2,14 @@
 
 This library allows you to add City Context widgets to your web page in a couple of lines, while allowing you to somewhat customize their appearance.
 
+# Examples
+
+The following widgets are available:
+
+  - [Schools](https://www.citycontext.com/features/schools)
+  - [Demographics](https://www.citycontext.com/features/demographics)
+  - [Criminality](https://www.citycontext.com/features/criminality)
+
 # Quick start
 
 Include City Context scripts and stylesheets in your HTML header tag:
@@ -84,14 +92,15 @@ The recommended way to use citycontext-ui for a more complex project is through 
 Install the citycontext-ui module and add it to dependencies in package.json:
 
 ```bash
-    npm install --save citycontext-ui
+npm install --save citycontext-ui
 ```
 
 Require citycontext-ui in your script
 
 ```javascript
 // main.js
-require('citycontext-ui'); // auto-attaches to window.citycontext
+var citycontext = require('citycontext-ui');
+```
 
 Browserify it:
 
@@ -112,7 +121,7 @@ npm install
 make css
 ```
 
-cityconext-ui uses [less](http://lesscss.org/). The `less folder` relies on a number of variables that are found in the `less/theme.less` file. This could be a good first file to modify.
+citycontext-ui uses the [less](http://lesscss.org/) CSS preprocessor. The `less` folder relies on a number of variables that are found in the `less/theme.less` file. This could be a good first file to modify.
 
 ## Javascript
 
@@ -123,7 +132,7 @@ The appearance can be further customized by configuring the widgets.
 To fit you color scheme, the mapbox markers color can be customized:
 
 ```javascript
-citycontext = require('citycontext-ui');
+var citycontext = require('citycontext-ui');
 citycontext.mapMarkersColor: '#409840';
 citycontext.SchoolsWidget('#schools-widget').render();
 ```
@@ -134,7 +143,7 @@ The criminality bar chart provides a period-by-period (month/quarter/year) compa
 The colors of the bar for each year can be specified to match you color theme. Each color is represented by a `[red, green, blue]` triple.
 
 ```javascript
-citycontext = require('citycontext-ui');
+var citycontext = require('citycontext-ui');
 citycontext.criminalityGraph.barColorsRGBA: [
   [64, 152, 63], // first year color
   [63, 64, 152], // second year color
@@ -146,10 +155,33 @@ citycontext.CriminalityWidget('#criminality-widget').render();
 citycontext-ui relies on the [Chart.js](http://www.chartjs.org) library to plot criminality statistics. All the [global](http://www.chartjs.org/docs/#getting-started-global-chart-configuration) and [bar chart-specific options](http://www.chartjs.org/docs/#bar-chart-chart-options) that Chart.js uses can be specified to further customize the graph.
 
 ```javascript
-citycontext = require('citycontext-ui');
+var citycontext = require('citycontext-ui');
 citycontext.chartsOptions.global.showScale = false; // global option
 citycontext.chartsOptions.Bar.barShowStroke = false; // bar chart-specific option
 citycontext.CriminalityWidget('#criminality-widget').render();
+```
+
+# Hooking into events
+
+The widgets trigger events that you can hook into, whenever someone submits a postcode, whenever the lookup succeeds and when it fails.
+
+```javascript
+var citycontext = require('citycontext-ui');
+citycontext.CriminalityWidget('#criminality-widget').render();
+
+var widget = document.querySelector('#criminality-widget');
+
+widget.addEventListener('citycontext-ui.submit', function(e) {
+  console.info("Query submitted: " + e.detail.input);
+});
+
+widget.addEventListener('citycontext-ui.success', function(e) {
+  console.info("Query succeeded: " + e.detail.input);
+});
+
+widget.addEventListener('citycontext-ui.error', function(e) {
+  console.error("Query failed for " + e.detail.input + ". Error: " + e.detail.error);
+});
 ```
 
 # Development
