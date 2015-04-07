@@ -4,7 +4,17 @@
 .citycontext-ui.criminality-widget-container {
   .graph-container {
     height: @citycontext-ui-widget-height - 70px;
+    @media only screen and (max-width: 720px) {
+      height: 480px;
+    }
+
     position: relative;
+    &:after {
+      content: " ";
+      clear: both;
+      display: table;
+    }
+
     .graph {
       margin-left: 40px;
     }
