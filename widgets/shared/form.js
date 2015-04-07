@@ -43,7 +43,7 @@ var Form = R.createClass({
         self.getDOMNode().dispatchEvent(successEvent);
       }, function(error) {
         var errorEvent = new CustomEvent('citycontext-ui.error', {
-          detail: { error: error },
+          detail: { input: input, error: error },
           bubbles: true
         });
         self.getDOMNode().dispatchEvent(errorEvent);

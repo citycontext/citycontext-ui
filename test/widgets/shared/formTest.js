@@ -51,11 +51,13 @@ tape('event on success', function(t) {
 });
 
 tape('event on failure', function(t) {
-  t.plan(1);
+  t.plan(2);
 
   var err;
+  var inputValue;
   form.getDOMNode().addEventListener('citycontext-ui.error', function(ev) {
     err = ev.detail.error;
+    inputValue = ev.detail.input;
   });
 
   var input = testUtils.findRenderedDOMComponentWithClass(form, 'input');
@@ -64,5 +66,6 @@ tape('event on failure', function(t) {
 
   setTimeout(function() {
     t.equal(err, 'fail!', 'The event on error should be sent');
+    t.equal(inputValue, 'fail', 'The event on error should be sent');
   }, 200);
 });
