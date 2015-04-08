@@ -38,8 +38,10 @@
         citycontext.config.mapboxToken = 'my Mapbox token';
 
         citycontext.CriminalityWidget('#criminality-widget').render();
-        citycontext.SchoolsWidget('#schools-widget').render();
         citycontext.DemographicsWidget('#demographics-widget').render();
+
+        var schoolsWidget = citycontext.SchoolsWidget('#schools-widget', { displayForm: false }).render();
+        schoolsWidget.queryByPostcode('B9 4AA');
       })();
     </script>
   </body>

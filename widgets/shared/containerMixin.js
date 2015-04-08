@@ -15,7 +15,6 @@ var ContainerMixin = {
       data: null,
       error: null,
       client: this.props.client || client,
-      displayForm: typeof this.props.displayForm === 'undefined' ? true : this.props.displayForm,
       showResults: false,
       showErrors: false
     };
@@ -26,26 +25,41 @@ var ContainerMixin = {
   },
 
   queryByPostcode: function(postcode) {
-    return this.queryHandler(function() {
+    return this.queryHandler(function(postcode) {
       return this.state.client.byPostcode(postcode);
-    }.bind(this));
+    }.bind(this), postcode);
   },
 
-  queryHandler: function(query) {
+  queryHandler: function(queryFn, input) {
     var self = this;
     self.setState({
       showErrors: false,
       showResults: false
     });
+    var submitEvent = new CustomEvent('citycontext-ui.submit', {
+      detail: { input: input },
+      bubbles: true
+    });
+    this.getDOMNode().dispatchEvent(submitEvent);
 
-    return query()
+    return queryFn(input)
       .then(function(data) {
+        var successEvent = new CustomEvent('citycontext-ui.success', {
+          detail: { input: input },
+          bubbles: true
+        });
+        self.getDOMNode().dispatchEvent(successEvent);
         self.setState({
           showResults: true,
           data: data,
           error: null
         });
       }, function(error) {
+        var errorEvent = new CustomEvent('citycontext-ui.error', {
+          detail: { input: input, error: error },
+          bubbles: true
+        });
+        self.getDOMNode().dispatchEvent(errorEvent);
         self.setState({
           showErrors: true,
           data: null,
@@ -56,7 +70,7 @@ var ContainerMixin = {
   },
 
   makeFormEl: function() {
-    if (this.state.displayForm) {
+    if (this.props.displayForm) {
       return R.createElement(Form, {
         onSubmit: this.queryByPostcode,
       });

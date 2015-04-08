@@ -24,33 +24,12 @@ var Form = R.createClass({
     this.setState({ status: statuses.waiting });
 
     var input = this.refs.input.getDOMNode().value;
-
-
-    var submitEvent = new CustomEvent('citycontext-ui.submit', {
-      detail: { input: input },
-      bubbles: true
-    });
-    this.getDOMNode().dispatchEvent(submitEvent);
     var promise = this.props.onSubmit(input);
 
     var self = this;
-    promise
-      .then(function () {
-        var successEvent = new CustomEvent('citycontext-ui.success', {
-          detail: { input: input },
-          bubbles: true
-        });
-        self.getDOMNode().dispatchEvent(successEvent);
-      }, function(error) {
-        var errorEvent = new CustomEvent('citycontext-ui.error', {
-          detail: { input: input, error: error },
-          bubbles: true
-        });
-        self.getDOMNode().dispatchEvent(errorEvent);
-      })
-      .then(function() {
-        self.setState({ status: statuses.idle });
-      });
+    promise.then(function() {
+      self.setState({ status: statuses.idle });
+    });
   },
 
   render: function() {

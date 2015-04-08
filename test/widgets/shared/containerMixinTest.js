@@ -47,7 +47,7 @@ var render = function(element) {
 };
 
 tape('Only the form is displayed on load', function(t) {
-  var containerElement = R.createElement(Container);
+  var containerElement = R.createElement(Container, { displayForm: true });
   var container = render(containerElement);
 
   t.plan(3);
@@ -70,37 +70,64 @@ tape('The form can be hidden with the displayForm option', function(t) {
 });
 
 tape('The results are shown on successful lookup', function(t) {
-  t.plan(2);
+  t.plan(4);
   var successfulClient = {
     byPostcode: function() {
       return Promise.resolve({});
     }
   };
-  var containerElement = R.createElement(Container, { client: successfulClient });
+  var containerElement = R.createElement(Container, {
+    displayForm: false,
+    client: successfulClient
+  });
   var container = render(containerElement);
+  var resSubmit;
+  var resSuccess;
 
-  testUtils.Simulate.submit(getForm(container).getDOMNode());
+  container.getDOMNode().addEventListener('citycontext-ui.submit', function(ev) {
+    resSubmit = ev.detail.input;
+  });
+
+  container.getDOMNode().addEventListener('citycontext-ui.success', function(ev) {
+    resSuccess = ev.detail.input;
+  });
+
+  container.queryByPostcode('postcode');
 
   setTimeout(function() {
     t.equal(getResults(container).props.show, true, 'Results should be visible');
     t.equal(getErrors(container).props.show, false, 'Errors should not be visible');
+    t.equal(resSubmit, 'postcode', 'An event should be triggered on submit');
+    t.equal(resSuccess, 'postcode', 'An event should be triggered on success');
   }, 200);
 });
 
 tape('The errors are shown on failed lookup', function(t) {
-  t.plan(2);
+  t.plan(3);
   var failingClient = {
     byPostcode: function() {
-      return Promise.reject({});
+      return Promise.reject('fail');
     }
   };
-  var containerElement = R.createElement(Container, { client: failingClient });
+  var containerElement = R.createElement(Container, {
+    displayForm: false,
+    client: failingClient
+  });
   var container = render(containerElement);
+  var err;
 
-  testUtils.Simulate.submit(getForm(container).getDOMNode());
+  container.getDOMNode().addEventListener('citycontext-ui.error', function(ev) {
+    err = {
+      input: ev.detail.input,
+      error: ev.detail.error
+    };
+  });
+
+  container.queryByPostcode('postcode');
 
   setTimeout(function() {
     t.equal(getResults(container).props.show, false, 'Results should not be visible');
     t.equal(getErrors(container).props.show, true, 'Errors should be visible');
+    t.deepEqual(err, { input: 'postcode', error: 'fail' }, 'An event should be triggered on error');
   }, 200);
 });

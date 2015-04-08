@@ -7,13 +7,19 @@ function Widget(reactClass, selector, opts) {
 }
 
 Widget.prototype.render = function() {
-  var container = R.createElement(this.reactClass, {
-    displayForm: this.opts.displayForm
+  var element = R.createElement(this.reactClass, {
+    displayForm: typeof this.opts.displayForm === 'undefined' ? true : this.opts.displayForm,
   });
 
-  R.render(
-    container, document.querySelector(this.selector)
+  this.container = R.render(
+    element, document.querySelector(this.selector)
   );
+
+  return this;
+};
+
+Widget.prototype.queryByPostcode = function(postcode) {
+  this.container.queryByPostcode(postcode);
 };
 
 module.exports = Widget;
