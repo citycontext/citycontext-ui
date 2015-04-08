@@ -4,16 +4,29 @@ function Widget(reactClass, selector, opts) {
   this.selector = selector;
   this.reactClass = reactClass;
   this.opts = opts || {};
+
+  // Populated after the call to render()
+  this.container = null;
 }
 
 Widget.prototype.render = function() {
-  var element = R.createElement(this.reactClass, {
-    displayForm: typeof this.opts.displayForm === 'undefined' ? true : this.opts.displayForm,
-  });
+  var node = document.querySelector(this.selector);
+  var postcode = node.getAttribute('data-postcode');
+  var latlon = node.getAttribute('data-latlon');
+  if (postcode && latlon) {
+    throw 'At most one of data-postcode and data-latlon attributes should be specify for the node ' + this.selector;
+  }
 
-  this.container = R.render(
-    element, document.querySelector(this.selector)
-  );
+  var props = {
+    displayForm: typeof this.opts.displayForm === 'undefined' ? true : this.opts.displayForm,
+  };
+
+  if (postcode) { props.postcode = postcode; }
+  if (latlon) { props.latlon = latlon; }
+
+  var element = R.createElement(this.reactClass, props);
+
+  this.container = R.render(element, node);
 
   return this;
 };

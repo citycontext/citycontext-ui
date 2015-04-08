@@ -3,11 +3,14 @@ var Form    = require('../shared/form');
 var Errors  = require('../shared/errors');
 var client  = require('../../client');
 var Promise = require('promise');
+var Types   = R.PropTypes;
 
 var ContainerMixin = {
   propTypes: {
-    client: R.PropTypes.object,
-    displayForm: R.PropTypes.bool
+    client: Types.object,
+    displayForm: Types.bool,
+    postcode: Types.string,
+    latlon: Types.string
   },
 
   getInitialState: function() {
@@ -22,6 +25,13 @@ var ContainerMixin = {
 
   componentDidMount: function() {
     this.getDOMNode().classList.add('citycontext-ui');
+    if (this.props.postcode) {
+      this.queryByPostcode(this.props.postcode);
+    }
+
+    if (this.props.latlon) {
+      this.queryByLatLon(this.props.latlon);
+    }
   },
 
   queryByPostcode: function(postcode) {
