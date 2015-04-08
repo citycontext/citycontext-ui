@@ -1,6 +1,6 @@
 # Overview
 
-This library allows you to add City Context widgets to your web page in a couple of lines, while allowing you to somewhat customize their appearance.
+This library allows you to add City Context widgets to your web page in a couple of lines, while allowing you to somewhat customize their appearance, and feed them with data coming from sources different from the text input.
 
 # Examples
 
@@ -106,6 +106,38 @@ Browserify it:
 
 ```bash
 browserify main.js -o bundle.js
+```
+
+# Programmatic usage
+
+Most of the time, you won't want to use the provided text entry. Instead, you want to display a widget next to, say, a listing or an existing map. In that case, the point of interest won't be specified by the user input, but rather will come from elsewhere in the application.
+
+First, when instantiating the widgets, let's hide the form:
+
+```javascript
+  var demographicsWidget = citycontext.DemographicsWidget('#demographics-widget', { displayForm: false }).render();
+```
+
+Next, let's update it via a postcode query:
+
+```javascript
+demographicsWidget.queryByPostcode('LS1 5ES');
+```
+
+We can also query by a point, using its latitude and longitude:
+
+```javascript
+demographicsWidget.queryByLatLon('53.477860,-2.261099');
+```
+
+Alternatively, we can use data coming directly from the markup:
+
+```html
+<div id="demographics-widget" data-postcode="LS1 5ES"></div>
+```
+
+```html
+<div id="schools-widget" data-latlon='53.477860,-2.261099'></div>
 ```
 
 # Customizing the appearance
