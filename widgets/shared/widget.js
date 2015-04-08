@@ -22,4 +22,8 @@ Widget.prototype.queryByPostcode = function(postcode) {
   this.container.queryByPostcode(postcode);
 };
 
+Widget.prototype.queryByLatLon = function(latlon) {
+  this.container.queryByLatLon(latlon);
+};
+
 module.exports = Widget;

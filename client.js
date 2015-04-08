@@ -4,9 +4,17 @@ var Promise = require('promise');
 
 module.exports = {
   byPostcode: function(postcode) {
-    return new Promise(function(fullfill, reject) {
-      var url = config.baseUrl + '/' + postcode + '?user_key=' + config.userKey;
+    var url = config.baseUrl + '/postcodes/' + postcode + '?user_key=' + config.userKey;
+    return this.query(url);
+  },
 
+  byLatLon: function(latlon) {
+    var url = config.baseUrl + '/@' + latlon + '?user_key=' + config.userKey;
+    return this.query(url);
+  },
+
+  query: function(url) {
+    return new Promise(function(fullfill, reject) {
       request(url, function(err, response, body) {
         if(!err && response.statusCode >= 200 && response.statusCode < 400) {
           fullfill(JSON.parse(body));

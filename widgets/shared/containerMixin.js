@@ -30,6 +30,12 @@ var ContainerMixin = {
     }.bind(this), postcode);
   },
 
+  queryByLatLon: function(latlon) {
+    return this.queryHandler(function(latlon) {
+      return this.state.client.byLatLon(latlon);
+    }.bind(this), latlon);
+  },
+
   queryHandler: function(queryFn, input) {
     var self = this;
     self.setState({
