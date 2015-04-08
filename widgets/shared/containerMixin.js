@@ -6,7 +6,8 @@ var Promise = require('promise');
 
 var ContainerMixin = {
   propTypes: {
-    client: R.PropTypes.object
+    client: R.PropTypes.object,
+    displayForm: R.PropTypes.bool
   },
 
   getInitialState: function() {
@@ -14,6 +15,7 @@ var ContainerMixin = {
       data: null,
       error: null,
       client: this.props.client || client,
+      displayForm: typeof this.props.displayForm === 'undefined' ? true : this.props.displayForm,
       showResults: false,
       showErrors: false
     };
@@ -23,14 +25,20 @@ var ContainerMixin = {
     this.getDOMNode().classList.add('citycontext-ui');
   },
 
-  query: function(val) {
+  queryByPostcode: function(postcode) {
+    return this.queryHandler(function() {
+      return this.state.client.byPostcode(postcode);
+    }.bind(this));
+  },
+
+  queryHandler: function(query) {
     var self = this;
     self.setState({
       showErrors: false,
       showResults: false
     });
 
-    return this.state.client.byPostcode(val)
+    return query()
       .then(function(data) {
         self.setState({
           showResults: true,
@@ -48,9 +56,13 @@ var ContainerMixin = {
   },
 
   makeFormEl: function() {
-    return R.createElement(Form, {
-      onSubmit: this.query,
-    });
+    if (this.state.displayForm) {
+      return R.createElement(Form, {
+        onSubmit: this.queryByPostcode,
+      });
+    } else {
+      return R.DOM.div();
+    }
   },
 
   makeErrorEl: function() {

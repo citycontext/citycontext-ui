@@ -1,19 +1,14 @@
-var R = require('react');
 var Container = require('./demographics/container');
+var Widget = require('./shared/widget');
 
-function DemographicsWidget(selector) {
+DemographicsWidget.prototype = Object.create(Widget.prototype);
+DemographicsWidget.prototype.constructor = DemographicsWidget;
+
+function DemographicsWidget(selector, opts) {
   if (!(this instanceof DemographicsWidget)) {
-    return new DemographicsWidget(selector);
+    return new DemographicsWidget(selector, opts);
   }
-  this.selector = selector;
+  Widget.call(this, Container, selector, opts);
 }
-
-DemographicsWidget.prototype.render = function() {
-  var container = R.createElement(Container);
-
-  R.render(
-    container, document.querySelector(this.selector)
-  );
-};
 
 module.exports = DemographicsWidget;

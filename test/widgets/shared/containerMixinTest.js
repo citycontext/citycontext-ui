@@ -57,6 +57,18 @@ tape('Only the form is displayed on load', function(t) {
   t.equal(getErrors(container).props.show, false, 'No results should be displayed');
 });
 
+tape('The form can be hidden with the displayForm option', function(t) {
+  var containerElement = R.createElement(Container, { displayForm: false });
+  var container = render(containerElement);
+
+  t.plan(1);
+  t.equal(
+    testUtils.scryRenderedComponentsWithType(container, Form).length,
+    0,
+    'There should be no Form'
+  );
+});
+
 tape('The results are shown on successful lookup', function(t) {
   t.plan(2);
   var successfulClient = {

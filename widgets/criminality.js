@@ -1,19 +1,14 @@
-var R = require('react');
 var Container = require('./criminality/container');
+var Widget = require('./shared/widget');
 
-function CriminalityWidget(selector) {
+CriminalityWidget.prototype = Object.create(Widget.prototype);
+CriminalityWidget.prototype.constructor = CriminalityWidget;
+
+function CriminalityWidget(selector, opts) {
   if (!(this instanceof CriminalityWidget)) {
-    return new CriminalityWidget(selector);
+    return new CriminalityWidget(selector, opts);
   }
-  this.selector = selector;
+  Widget.call(this, Container, selector, opts);
 }
-
-CriminalityWidget.prototype.render = function() {
-  var container = R.createElement(Container);
-
-  R.render(
-    container, document.querySelector(this.selector)
-  );
-};
 
 module.exports = CriminalityWidget;

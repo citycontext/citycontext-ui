@@ -1,19 +1,14 @@
-var R = require('react');
+var Widget = require('./shared/widget');
 var Container = require('./schools/container');
 
-function SchoolsWidget(selector) {
+SchoolsWidget.prototype = Object.create(Widget.prototype);
+SchoolsWidget.prototype.constructor = SchoolsWidget;
+
+function SchoolsWidget(selector, opts) {
   if (!(this instanceof SchoolsWidget)) {
-    return new SchoolsWidget(selector);
+    return new SchoolsWidget(selector, opts);
   }
-  this.selector = selector;
+  Widget.call(this, Container, selector, opts);
 }
-
-SchoolsWidget.prototype.render = function() {
-  var container = R.createElement(Container);
-
-  R.render(
-    container, document.querySelector(this.selector)
-  );
-};
 
 module.exports = SchoolsWidget;
