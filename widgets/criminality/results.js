@@ -16,7 +16,8 @@ var Results = R.createClass({
     if (!this.props.data) { return D.div(); }
     var style     = this.props.show ? {} : { display: 'none' };
     var data      = this.props.data;
-    var geoJSON   = JSON.parse(data.lsoa.geometry);
+    var geom      = data.lsoa.geometry;
+    var geoJSON   = (typeof geom === "string") ? JSON.parse(geom) : geom;
     var crimeData = data.lsoa.crimes;
     var lsoaName  = data.lsoa.name;
     var sectionEl;

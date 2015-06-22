@@ -24,7 +24,7 @@ $(CSS_TARGET): $(CSS_MAIN)
 	$(NODE_BIN)/yuicompressor $< -o $@
 
 $(CSS_MAIN): $(CSS_MAIN_NO_PREFIX) | dist
-	$(NODE_BIN)/autoprefixer $< -o $@
+	$(NODE_BIN)/postcss --use autoprefixer -c postcss.json $< -o $@
 
 .PHONY: $(CSS_MAIN_NO_PREFIX)
 $(CSS_MAIN_NO_PREFIX): $(MAIN_LESS) | build
@@ -48,7 +48,6 @@ dist:
 	mkdir -p dist
 
 clean: clean_js
-	rm -rf node_modules
 
 clean_js:
 	rm -rf dist build
