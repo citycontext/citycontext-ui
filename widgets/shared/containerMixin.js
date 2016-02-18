@@ -11,7 +11,8 @@ var ContainerMixin = {
     client: Types.object,
     displayForm: Types.bool,
     postcode: Types.string,
-    latlon: Types.string
+    latlon: Types.string,
+    endpoint: Types.string
   },
 
   getInitialState: function() {
@@ -37,13 +38,13 @@ var ContainerMixin = {
 
   queryByPostcode: function(postcode) {
     return this.queryHandler(function(postcode) {
-      return this.state.client.byPostcode(postcode);
+      return this.state.client.byPostcode(postcode, this.props.endpoint);
     }.bind(this), postcode);
   },
 
   queryByLatLon: function(latlon) {
     return this.queryHandler(function(latlon) {
-      return this.state.client.byLatLon(latlon);
+      return this.state.client.byLatLon(latlon, this.props.endpoint);
     }.bind(this), latlon);
   },
 

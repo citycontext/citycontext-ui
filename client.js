@@ -3,13 +3,13 @@ var config  = require('./config');
 var Promise = require('promise');
 
 module.exports = {
-  byPostcode: function(postcode) {
-    var url = config.baseUrl + '/postcodes/' + postcode + '?user_key=' + config.userKey;
+  byPostcode: function(postcode, endpoint) {
+    var url = config.baseUrl + '/postcodes/' + postcode + '/' + endpoint + '?user_key=' + config.userKey;
     return this.query(url);
   },
 
-  byLatLon: function(latlon) {
-    var url = config.baseUrl + '/@' + latlon + '?user_key=' + config.userKey;
+  byLatLon: function(latlon, endpoint) {
+    var url = config.baseUrl + '/@' + latlon + '/' + endpoint + '?user_key=' + config.userKey;
     return this.query(url);
   },
 

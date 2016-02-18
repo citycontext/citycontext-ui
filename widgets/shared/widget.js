@@ -1,9 +1,10 @@
 var R = require('react');
 var RDom = require('react-dom');
 
-function Widget(reactClass, selector, opts) {
+function Widget(reactClass, endpoint, selector, opts) {
   this.selector = selector;
   this.reactClass = reactClass;
+  this.endpoint = endpoint;
   this.opts = opts || {};
 
   // Populated after the call to render()
@@ -20,6 +21,7 @@ Widget.prototype.render = function() {
 
   var props = {
     displayForm: typeof this.opts.displayForm === 'undefined' ? true : this.opts.displayForm,
+    endpoint: this.endpoint
   };
 
   if (postcode) { props.postcode = postcode; }
@@ -32,12 +34,12 @@ Widget.prototype.render = function() {
   return this;
 };
 
-Widget.prototype.queryByPostcode = function(postcode) {
-  this.container.queryByPostcode(postcode);
+Widget.prototype.queryByPostcode = function(postcode, endpoint) {
+  this.container.queryByPostcode(postcode, endpoint);
 };
 
-Widget.prototype.queryByLatLon = function(latlon) {
-  this.container.queryByLatLon(latlon);
+Widget.prototype.queryByLatLon = function(latlon, endpoint) {
+  this.container.queryByLatLon(latlon, endpoint);
 };
 
 module.exports = Widget;
