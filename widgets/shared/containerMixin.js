@@ -1,4 +1,5 @@
 var R       = require('react');
+var RDOM    = require('react-dom');
 var Form    = require('../shared/form');
 var Errors  = require('../shared/errors');
 var client  = require('../../client');
@@ -24,7 +25,7 @@ var ContainerMixin = {
   },
 
   componentDidMount: function() {
-    this.getDOMNode().classList.add('citycontext-ui');
+    RDOM.findDOMNode(this).classList.add('citycontext-ui');
     if (this.props.postcode) {
       this.queryByPostcode(this.props.postcode);
     }
@@ -56,7 +57,7 @@ var ContainerMixin = {
       detail: { input: input },
       bubbles: true
     });
-    this.getDOMNode().dispatchEvent(submitEvent);
+    RDOM.findDOMNode(this).dispatchEvent(submitEvent);
 
     return queryFn(input)
       .then(function(data) {
@@ -64,7 +65,7 @@ var ContainerMixin = {
           detail: { input: input },
           bubbles: true
         });
-        self.getDOMNode().dispatchEvent(successEvent);
+        RDOM.findDOMNode(self).dispatchEvent(successEvent);
         self.setState({
           showResults: true,
           data: data,
@@ -75,7 +76,7 @@ var ContainerMixin = {
           detail: { input: input, error: error },
           bubbles: true
         });
-        self.getDOMNode().dispatchEvent(errorEvent);
+        RDOM.findDOMNode(self).dispatchEvent(errorEvent);
         self.setState({
           showErrors: true,
           data: null,

@@ -1,4 +1,5 @@
 var R = require('react');
+var RDOM = require('react-dom');
 var D = R.DOM;
 var Types = R.PropTypes;
 var MarkType = Types.oneOf([1,2,3,4]).isRequired;
@@ -44,7 +45,7 @@ var School = R.createClass({
       }
     );
 
-    this.getDOMNode().dispatchEvent(event);
+    RDOM.findDOMNode(this).dispatchEvent(event);
   },
 
   render: function() {

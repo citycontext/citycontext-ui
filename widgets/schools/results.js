@@ -1,4 +1,5 @@
 var R = require('react');
+var RDOM = require('react-dom');
 var D = R.DOM;
 var Header = require('../shared/header');
 var MapboxMap = require('../shared/mapboxMap');
@@ -30,7 +31,7 @@ var Results = R.createClass({
 
   componentDidMount: function() {
     var results = this;
-    this.getDOMNode().addEventListener('citycontext-ui.activate-school', function(e) {
+    RDOM.findDOMNode(this).addEventListener('citycontext-ui.activate-school', function(e) {
       e.stopPropagation();
       results.toggleActive(e.detail.urn);
       console.log('activate school: ' + e.detail.urn);

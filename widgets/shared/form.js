@@ -1,4 +1,5 @@
 var R = require('react');
+var RDOM = require('react-dom');
 var D = R.DOM;
 
 var statuses = {
@@ -23,7 +24,7 @@ var Form = R.createClass({
     ev.preventDefault();
     this.setState({ status: statuses.waiting });
 
-    var input = this.refs.input.getDOMNode().value;
+    var input = this.refs.input.value;
     var promise = this.props.onSubmit(input);
 
     var self = this;

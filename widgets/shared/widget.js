@@ -1,4 +1,5 @@
 var R = require('react');
+var RDom = require('react-dom');
 
 function Widget(reactClass, selector, opts) {
   this.selector = selector;
@@ -26,7 +27,7 @@ Widget.prototype.render = function() {
 
   var element = R.createElement(this.reactClass, props);
 
-  this.container = R.render(element, node);
+  this.container = RDom.render(element, node);
 
   return this;
 };

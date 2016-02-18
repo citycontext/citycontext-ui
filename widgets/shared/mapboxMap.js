@@ -1,6 +1,7 @@
 /* global L */
 
 var R = require('react');
+var RDOM = require('react-dom');
 var D = R.DOM;
 var config = require('../../config');
 
@@ -25,7 +26,7 @@ var MapboxMap = R.createClass({
 
   componentDidMount: function() {
     mb.accessToken = config.mapboxToken;
-    var map = mb.map(R.findDOMNode(this.refs.map), config.mapboxMapId);
+    var map = mb.map(this.refs.map, config.mapboxMapId);
     map.scrollWheelZoom.disable();
     map.dragging.disable();
     var layer = mb.featureLayer().addTo(map);
