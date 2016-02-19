@@ -6,6 +6,7 @@ module.exports = {
   mapboxToken: undefined,
 
   mapMarkersColor: '#409840',
+  mapPOIColor: '#BE5050',
 
   chartsOptions: {
     global: {

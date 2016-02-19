@@ -3,8 +3,15 @@ var config  = require('./config');
 var Promise = require('promise');
 
 module.exports = {
-  byPostcode: function(postcode, endpoint) {
-    var url = config.baseUrl + '/postcodes/' + postcode + '/' + endpoint + '?user_key=' + config.userKey;
+  byPostcode: function(postcode, endpoint, queryParams) {
+    var queryParams = queryParams || {};
+    queryParams['user_key'] = config.userKey;
+    var queryStringFragments = [];
+    for (k in queryParams) {
+      queryStringFragments.push(k + '=' + queryParams[k]);
+    }
+    queryString = queryStringFragments.join('&');
+    var url = config.baseUrl + '/postcodes/' + postcode + '/' + endpoint + '?' + queryString;
     return this.query(url);
   },
 

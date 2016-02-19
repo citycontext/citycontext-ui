@@ -78,7 +78,10 @@ tape('getGeoJSON', function(t) {
           },
           properties: {
             title: 'Hailey Hall School',
-            'marker-symbol': 'school'
+            'marker-symbol': 'school',
+            eventDetail:  {
+              urn: 117673
+            },
           }
         },
         {
@@ -91,7 +94,10 @@ tape('getGeoJSON', function(t) {
             title: 'The Cranbourne Primary School',
             'marker-color': config.mapMarkersColor,
             'marker-symbol': 'school',
-            'marker-size': 'large'
+            'marker-size': 'large',
+            eventDetail:  {
+              urn: 117307
+            },
           }
         },
         {
@@ -101,7 +107,7 @@ tape('getGeoJSON', function(t) {
             type: 'Point'
           },
           properties: {
-            'marker-color': config.mapMarkersColor,
+            'marker-color': config.mapPOIColor,
             'marker-style': 'solid'
           }
         }

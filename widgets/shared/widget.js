@@ -21,7 +21,8 @@ Widget.prototype.render = function() {
 
   var props = {
     displayForm: typeof this.opts.displayForm === 'undefined' ? true : this.opts.displayForm,
-    endpoint: this.endpoint
+    endpoint: this.endpoint,
+    queryParams: this.opts.queryParams
   };
 
   if (postcode) { props.postcode = postcode; }

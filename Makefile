@@ -12,7 +12,7 @@ MAIN_JS            = index.js
 BUNDLE_JS          = build/citycontext-ui.js
 JS_TARGET          = dist/citycontext-ui.min.js
 
-all: npm_install test js css
+all: npm_install test js css images
 
 css: $(CSS_TARGET) $(CSS_STAGING_TARGET)
 
@@ -40,6 +40,11 @@ $(JS_TARGET): $(BUNDLE_JS) | dist
 .PHONY: $(BUNDLE_JS)
 $(BUNDLE_JS): $(MAIN_JS) | build
 	$(NODE_BIN)/browserify -s citycontext $< -o $@
+
+.PHONY: images
+images:
+	rm -rf dist/images
+	cp -R images dist/
 
 build:
 	mkdir -p build
