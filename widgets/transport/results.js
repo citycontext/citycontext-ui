@@ -5,7 +5,6 @@ var Header = require('../shared/header');
 var MapboxMap = require('../shared/mapboxMap');
 var config = require('../../config');
 var modeMarkers = require('./modeMarkers');
-var colors = require('../shared/colors');
 
 var Results = R.createClass({
   displayName: 'transport-results',
