@@ -1,3 +1,4 @@
+require('./polyfills');
 var DemographicsWidget = require('./widgets/demographics');
 var CriminalityWidget  = require('./widgets/criminality');
 var SchoolsWidget      = require('./widgets/schools');
