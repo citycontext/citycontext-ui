@@ -1,5 +1,5 @@
 module.exports = {
-  baseUrl: 'https://api.citycontext.com/v2',
+  baseUrl: 'http://staging-lb.citycontext.com/v2',
   queryString: undefined,
   userKey: undefined,
   mapboxMapId: undefined,
