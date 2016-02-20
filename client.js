@@ -11,7 +11,7 @@ module.exports = {
       queryStringFragments.push(k + '=' + queryParams[k]);
     }
     queryString = queryStringFragments.join('&');
-    var url = config.baseUrl + '/postcodes/' + postcode + '/' + endpoint + '?' + queryString;
+    var url = '/postcodes/' + postcode + '/' + endpoint + '?' + queryString;
     return this.query(url);
   },
 
@@ -22,7 +22,7 @@ module.exports = {
 
   query: function(url) {
     return new Promise(function(fullfill, reject) {
-      request(url, function(err, response, body) {
+      request({ baseUrl: config.baseUrl, url: url} , function(err, response, body) {
         if(!err && response.statusCode >= 200 && response.statusCode < 400) {
           fullfill(JSON.parse(body));
         } else {
