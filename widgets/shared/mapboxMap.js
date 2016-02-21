@@ -58,7 +58,7 @@ var MapboxMap = R.createClass({
     this.state.layer.setGeoJSON(this.props.geoJSON);
     this.state.map.fitBounds(this.state.layer.getBounds());
     this.state.layer.eachLayer(function(l) {
-      if (l.feature.properties.openPopup) {
+      if (l.feature.properties && l.feature.properties.openPopup) {
         l.openPopup();
       }
     });
