@@ -16,7 +16,7 @@ module.exports = {
   },
 
   byLatLon: function(latlon, endpoint) {
-    var url = config.baseUrl + '/@' + latlon + '/' + endpoint + '?user_key=' + config.userKey;
+    var url = '/@' + latlon + '/' + endpoint + '?user_key=' + config.userKey;
     return this.query(url);
   },
 

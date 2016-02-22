@@ -12,6 +12,7 @@ var Form = R.createClass({
   propTypes: {
     // a callback that takes as argument the text input value
     onSubmit: R.PropTypes.func,
+    value: R.PropTypes.string
   },
 
   getInitialState: function() {
@@ -35,11 +36,20 @@ var Form = R.createClass({
 
   render: function() {
     var spinnerStyle = this.state.status === statuses.idle ? { display: 'none' } : {};
+    var inputProps = {
+      className: 'input',
+      type: 'text',
+      ref: 'input',
+    };
+
+    if (this.props.value) {
+      inputProps.defaultValue = this.props.value;
+    }
 
     return (
       D.form({ className: 'form', onSubmit: this.handleSubmit },
         D.div({ className: 'form-group' },
-          D.input({ className: 'input', type: 'text', ref: 'input' }),
+          D.input(inputProps),
           D.button({ type: 'submit', className: 'button' }, 'Go')
         ),
         D.div({className: 'form-group'},

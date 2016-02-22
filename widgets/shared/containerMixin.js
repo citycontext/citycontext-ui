@@ -89,10 +89,13 @@ var ContainerMixin = {
   },
 
   makeFormEl: function() {
+    var formProps = { onSubmit: this.onSubmit };
+    if (this.props.postcode) {
+      formProps.value = this.props.postcode;
+    }
+
     if (this.props.displayForm) {
-      return R.createElement(Form, {
-        onSubmit: this.queryByPostcode,
-      });
+      return R.createElement(Form, formProps);
     } else {
       return R.DOM.div();
     }
