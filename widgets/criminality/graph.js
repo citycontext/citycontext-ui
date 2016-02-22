@@ -1,4 +1,5 @@
 var R = require('react');
+var RDOM = require('react-dom');
 var D = R.DOM;
 var Chart = require('chart.js');
 var config = require('../../config');
@@ -137,9 +138,9 @@ var Graph = R.createClass({
 
 
   componentDidMount: function() {
-    var canvas = this.refs.graph.getDOMNode();
-    canvas.width = this.getDOMNode().offsetWidth;
-    canvas.height = this.getDOMNode().offsetHeight;
+    var canvas = this.refs.graph;
+    canvas.width = RDOM.findDOMNode(this).offsetWidth;
+    canvas.height = RDOM.findDOMNode(this).offsetHeight;
 
     var ctx = canvas.getContext('2d');
     this.state.chart = new Chart(ctx);

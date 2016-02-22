@@ -1,4 +1,5 @@
 var R = require('react');
+var RDOM = require('react-dom');
 var D = R.DOM;
 
 var statuses = {
@@ -11,6 +12,7 @@ var Form = R.createClass({
   propTypes: {
     // a callback that takes as argument the text input value
     onSubmit: R.PropTypes.func,
+    value: R.PropTypes.string
   },
 
   getInitialState: function() {
@@ -23,7 +25,7 @@ var Form = R.createClass({
     ev.preventDefault();
     this.setState({ status: statuses.waiting });
 
-    var input = this.refs.input.getDOMNode().value;
+    var input = this.refs.input.value;
     var promise = this.props.onSubmit(input);
 
     var self = this;
@@ -34,11 +36,20 @@ var Form = R.createClass({
 
   render: function() {
     var spinnerStyle = this.state.status === statuses.idle ? { display: 'none' } : {};
+    var inputProps = {
+      className: 'input',
+      type: 'text',
+      ref: 'input',
+    };
+
+    if (this.props.value) {
+      inputProps.defaultValue = this.props.value;
+    }
 
     return (
       D.form({ className: 'form', onSubmit: this.handleSubmit },
         D.div({ className: 'form-group' },
-          D.input({ className: 'input', type: 'text', ref: 'input' }),
+          D.input(inputProps),
           D.button({ type: 'submit', className: 'button' }, 'Go')
         ),
         D.div({className: 'form-group'},

@@ -1,4 +1,5 @@
 var R = require('react');
+var RDOM = require('react-dom');
 var D = R.DOM;
 var Header = require('../shared/header');
 var MapboxMap = require('../shared/mapboxMap');
@@ -30,8 +31,7 @@ var Results = R.createClass({
 
   componentDidMount: function() {
     var results = this;
-    this.getDOMNode().addEventListener('citycontext-ui.activate-school', function(e) {
-      e.stopPropagation();
+    RDOM.findDOMNode(this).addEventListener('citycontext-ui.activate-school', function(e) {
       results.toggleActive(e.detail.urn);
       console.log('activate school: ' + e.detail.urn);
     });
@@ -52,12 +52,15 @@ var Results = R.createClass({
     var features = schoolsData.map(function(school){
       var properties = {
         title: school.schoolName,
-        'marker-symbol': 'school'
+        'marker-symbol': 'school',
+        eventDetail: {
+          urn: school.urn
+        }
       };
 
       if (this.isActive(school)) {
         properties['marker-color'] = config.mapMarkersColor;
-        properties['marker-size']  = 'large';
+        properties['marker-size'] = 'large';
       }
 
       return {
@@ -77,7 +80,7 @@ var Results = R.createClass({
         coordinates: [location.lon, location.lat],
       },
       properties: {
-        'marker-color': config.mapMarkersColor,
+        'marker-color': config.mapPOIColor,
         'marker-style': 'solid'
       }
     });
@@ -104,7 +107,11 @@ var Results = R.createClass({
 
     if (config.mapboxMapId) {
       sectionEl = D.section(null,
-        R.createElement(MapboxMap, { size: 'half', geoJSON: this.getGeoJSON() }),
+        R.createElement(MapboxMap, {
+          size: 'half',
+          geoJSON: this.getGeoJSON(),
+          clickEventName: 'citycontext-ui.activate-school'
+        }),
         this.schoolListEl()
       );
     } else {

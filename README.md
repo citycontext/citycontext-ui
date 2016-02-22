@@ -7,6 +7,7 @@ This library allows you to add City Context widgets to your web page in a couple
 The following widgets are available:
 
   - [Schools](https://www.citycontext.com/features/schools)
+  - [Transport](https://www.citycontext.com/features/transport)
   - [Demographics](https://www.citycontext.com/features/demographics)
   - [Criminality](https://www.citycontext.com/features/criminality)
 
@@ -38,7 +39,7 @@ Then add the free user key that you got from [signing up](https://www.citycontex
 </body>
 ```
 
-To render the widget you need (either `CriminalityWidget`, `SchoolsWidget` or `DemographicsWidget`):
+To render the widget you need (either `TransportWidget`, `CriminalityWidget`, `SchoolsWidget` or `DemographicsWidget`):
 
 ```html
 <body>

@@ -1,11 +1,12 @@
 module.exports = {
-  baseUrl: 'https://api.citycontext.com/beta',
+  baseUrl: 'https://api.citycontext.com/v2/',
   queryString: undefined,
   userKey: undefined,
   mapboxMapId: undefined,
   mapboxToken: undefined,
 
   mapMarkersColor: '#409840',
+  mapPOIColor: '#BE5050',
 
   chartsOptions: {
     global: {

@@ -8,7 +8,7 @@ function CriminalityWidget(selector, opts) {
   if (!(this instanceof CriminalityWidget)) {
     return new CriminalityWidget(selector, opts);
   }
-  Widget.call(this, Container, selector, opts);
+  Widget.call(this, Container, 'criminality', selector, opts);
 }
 
 module.exports = CriminalityWidget;

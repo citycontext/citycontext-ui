@@ -8,7 +8,7 @@ function DemographicsWidget(selector, opts) {
   if (!(this instanceof DemographicsWidget)) {
     return new DemographicsWidget(selector, opts);
   }
-  Widget.call(this, Container, selector, opts);
+  Widget.call(this, Container, 'people', selector, opts);
 }
 
 module.exports = DemographicsWidget;

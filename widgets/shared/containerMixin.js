@@ -1,4 +1,5 @@
 var R       = require('react');
+var RDOM    = require('react-dom');
 var Form    = require('../shared/form');
 var Errors  = require('../shared/errors');
 var client  = require('../../client');
@@ -10,7 +11,9 @@ var ContainerMixin = {
     client: Types.object,
     displayForm: Types.bool,
     postcode: Types.string,
-    latlon: Types.string
+    latlon: Types.string,
+    endpoint: Types.string,
+    queryParams: Types.object
   },
 
   getInitialState: function() {
@@ -24,7 +27,7 @@ var ContainerMixin = {
   },
 
   componentDidMount: function() {
-    this.getDOMNode().classList.add('citycontext-ui');
+    RDOM.findDOMNode(this).classList.add('citycontext-ui');
     if (this.props.postcode) {
       this.queryByPostcode(this.props.postcode);
     }
@@ -36,13 +39,13 @@ var ContainerMixin = {
 
   queryByPostcode: function(postcode) {
     return this.queryHandler(function(postcode) {
-      return this.state.client.byPostcode(postcode);
+      return this.state.client.byPostcode(postcode, this.props.endpoint, this.props.queryParams);
     }.bind(this), postcode);
   },
 
   queryByLatLon: function(latlon) {
     return this.queryHandler(function(latlon) {
-      return this.state.client.byLatLon(latlon);
+      return this.state.client.byLatLon(latlon, this.props.endpoint, this.props.queryParams);
     }.bind(this), latlon);
   },
 
@@ -56,7 +59,7 @@ var ContainerMixin = {
       detail: { input: input },
       bubbles: true
     });
-    this.getDOMNode().dispatchEvent(submitEvent);
+    RDOM.findDOMNode(this).dispatchEvent(submitEvent);
 
     return queryFn(input)
       .then(function(data) {
@@ -64,7 +67,7 @@ var ContainerMixin = {
           detail: { input: input },
           bubbles: true
         });
-        self.getDOMNode().dispatchEvent(successEvent);
+        RDOM.findDOMNode(self).dispatchEvent(successEvent);
         self.setState({
           showResults: true,
           data: data,
@@ -75,7 +78,7 @@ var ContainerMixin = {
           detail: { input: input, error: error },
           bubbles: true
         });
-        self.getDOMNode().dispatchEvent(errorEvent);
+        RDOM.findDOMNode(self).dispatchEvent(errorEvent);
         self.setState({
           showErrors: true,
           data: null,
@@ -86,10 +89,13 @@ var ContainerMixin = {
   },
 
   makeFormEl: function() {
+    var formProps = { onSubmit: this.onSubmit };
+    if (this.props.postcode) {
+      formProps.value = this.props.postcode;
+    }
+
     if (this.props.displayForm) {
-      return R.createElement(Form, {
-        onSubmit: this.queryByPostcode,
-      });
+      return R.createElement(Form, formProps);
     } else {
       return R.DOM.div();
     }

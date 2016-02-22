@@ -8,7 +8,7 @@ function SchoolsWidget(selector, opts) {
   if (!(this instanceof SchoolsWidget)) {
     return new SchoolsWidget(selector, opts);
   }
-  Widget.call(this, Container, selector, opts);
+  Widget.call(this, Container, 'schools', selector, opts);
 }
 
 module.exports = SchoolsWidget;
