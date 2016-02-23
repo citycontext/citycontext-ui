@@ -89,7 +89,7 @@ var ContainerMixin = {
   },
 
   makeFormEl: function() {
-    var formProps = { onSubmit: this.onSubmit };
+    var formProps = { onSubmit: this.queryByPostcode };
     if (this.props.postcode) {
       formProps.value = this.props.postcode;
     }
