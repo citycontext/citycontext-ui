@@ -1,5 +1,5 @@
 var R = require('react');
-var U = require('../shared/domUtils');
+var DataTable = require('../dataTable');
 var D = R.DOM;
 
 var Description = R.createClass({
@@ -19,7 +19,8 @@ var Description = R.createClass({
     var floodData = this.props.floodData;
 
     if (this.props.isAtRisk) {
-      var table = U.dataTable(floodData, fields);
+      var table = R.createElement(DataTable, { data: floodData, fields: fields });
+
       var note  = D.p(null, D.small(null, 'chance ' + floodData.likelihood.note));
       return D.div({ className: 'data-table col span_5_of_12'}, table, note);
     } else {

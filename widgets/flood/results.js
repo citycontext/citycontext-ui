@@ -18,7 +18,6 @@ var Results = R.createClass({
     var floodData = data && data.floodRisk;
     var isAtRisk  = data && data.isAtRisk;
     var sectionEl;
-    var header;
 
     if (!data) { return D.div(null); }
 
@@ -33,15 +32,9 @@ var Results = R.createClass({
       );
     }
 
-    if (data.location) {
-      header = 'Flood risk for location ' + '@' + data.location.lat + "," + data.location.lon;
-    } else {
-      header = 'Flood risk';
-    }
-
     return D.section({ className: 'results', style: style },
       D.section(null,
-        R.createElement(Header, { text: header }),
+        R.createElement(Header, { text: 'flood risk area' }),
         sectionEl
       )
     );
