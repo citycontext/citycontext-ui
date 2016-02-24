@@ -13,7 +13,7 @@ var Description = R.createClass({
     var fields = [
       ['dataPublishedOn', 'Data published'],
       ['likelihood.riskCategory', 'Risk category'],
-      ['suitability.scale', 'Suitability scale']
+      ['suitability.note', 'Suitability']
     ];
 
     var floodData = this.props.floodData;
