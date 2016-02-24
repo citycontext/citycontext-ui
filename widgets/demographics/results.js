@@ -17,14 +17,13 @@ var Results = R.createClass({
     var style     = this.props.show ? {} : { display: 'none' };
     var data      = this.props.data;
     var geom      = data.lsoa.geometry;
-    var geoJSON   = (typeof geom === "string") ? JSON.parse(geom) : geom;
     var popData   = data.lsoa.population;
     var lsoaName  = data.lsoa.name;
     var sectionEl;
 
     if (config.mapboxMapId) {
       sectionEl = D.section(null,
-        R.createElement(MapboxMap, { geoJSON: geoJSON, size: 'half'}),
+        R.createElement(MapboxMap, { geoJSON: geom, size: 'half'}),
         R.createElement(Statistics, { popData: popData, size: 'half' })
       );
     } else {
