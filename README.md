@@ -10,6 +10,7 @@ The following widgets are available:
   - [Transport](https://www.citycontext.com/features/transport)
   - [Demographics](https://www.citycontext.com/features/demographics)
   - [Criminality](https://www.citycontext.com/features/criminality)
+  - [Flood Risk](https://www.citycontext.com/features/floodrisk)
 
 # Quick start
 
@@ -39,7 +40,7 @@ Then add the free user key that you got from [signing up](https://www.citycontex
 </body>
 ```
 
-To render the widget you need (either `TransportWidget`, `CriminalityWidget`, `SchoolsWidget` or `DemographicsWidget`):
+To render the widget you need (either `TransportWidget`, `CriminalityWidget`, `SchoolsWidget`, `FloodWidget` or `DemographicsWidget`):
 
 ```html
 <body>
