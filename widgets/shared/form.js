@@ -27,11 +27,13 @@ var Form = R.createClass({
 
     var input = this.refs.input.value;
     var promise = this.props.onSubmit(input);
-
     var self = this;
-    promise.then(function() {
+
+    function setIdle() {
       self.setState({ status: statuses.idle });
-    });
+    }
+
+    promise.then(setIdle).catch(setIdle);
   },
 
   render: function() {
