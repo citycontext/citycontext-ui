@@ -1,5 +1,6 @@
 var R = require('react');
 var D = R.DOM;
+var U = require('../shared/domUtils.js');
 
 var Statistics = R.createClass({
   displayName: 'demographics-statistics',
@@ -19,24 +20,10 @@ var Statistics = R.createClass({
       ['communalEstablishmentResidents', 'Number of communal establishment residents']
     ];
 
-    var className = 'statistics col ' +
+    var className = 'data-table col ' +
       (this.props.size === 'half' ? 'span_5_of_12' : 'span_12_of_12');
 
-    var rows = fields.reduce(function(acc, fs) {
-      var key     = fs[0];
-      var label   = fs[1];
-      var titleEl = D.td(null, label);
-      var valueEl = D.td(null, data[key]);
-      var rowEl   = D.tr(null, titleEl, valueEl);
-      acc.push(rowEl);
-      return acc;
-    }, [null]);
-
-    var tableEl = D.table(null,
-      D.tbody.apply(this, rows)
-    );
-
-    return D.div({ className: className }, tableEl);
+    return D.div({ className: className }, U.dataTable(data, fields));
   }
 });
 

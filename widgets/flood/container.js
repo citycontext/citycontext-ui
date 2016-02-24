@@ -10,7 +10,6 @@ var Container = R.createClass({
   render: function() {
     return D.div({ className: 'flood-widget-container' },
       this.makeFormEl(),
-
       R.createElement(Results, {
         show: this.state.showResults,
         data: this.state.data

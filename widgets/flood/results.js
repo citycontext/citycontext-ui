@@ -13,28 +13,35 @@ var Results = R.createClass({
   },
 
   render: function() {
-    if (!this.props.data) { return D.div(); }
-    var style     = this.props.show ? {} : { display: 'none' };
     var data      = this.props.data;
-    var floodData = this.props.data.floodRisk;
-    var geom      = floodData.geometry;
-    var geoJSON   = (typeof geom === "string") ? JSON.parse(geom) : geom;
+    var style     = this.props.show ? {} : { display: 'none' };
+    var floodData = data && data.floodRisk;
+    var isAtRisk  = data && data.isAtRisk;
     var sectionEl;
+    var header;
 
-    if (config.mapboxMapId) {
+    if (!data) { return D.div(null); }
+
+    if (config.mapboxMapId && isAtRisk) {
       sectionEl = D.section(null,
-        R.createElement(MapboxMap, { geoJSON: geoJSON, size: 'half'}),
-        R.createElement(Description, { floodData: floodData, size: 'half' })
+        R.createElement(MapboxMap, { geoJSON: floodData.geometry, size: 'half'}),
+        R.createElement(Description, { floodData: floodData, isAtRisk: isAtRisk, size: 'half' })
       );
     } else {
       sectionEl = D.section(null,
-        R.createElement(Description, { popData: floodData, size: 'full' })
+        R.createElement(Description, { floodData: floodData, isAtRisk: isAtRisk, size: 'full' })
       );
+    }
+
+    if (data.location) {
+      header = 'Flood risk for location ' + '@' + data.location.lat + "," + data.location.lon;
+    } else {
+      header = 'Flood risk';
     }
 
     return D.section({ className: 'results', style: style },
       D.section(null,
-        R.createElement(Header, { text: 'Flood risk' }),
+        R.createElement(Header, { text: header }),
         sectionEl
       )
     );
