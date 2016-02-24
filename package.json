@@ -1,6 +1,6 @@
 {
   "name": "citycontext-ui",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "City Context widgets",
   "main": "index.js",
   "scripts": {
