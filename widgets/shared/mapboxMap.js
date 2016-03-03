@@ -31,6 +31,7 @@ var MapboxMap = R.createClass({
     var that = this;
     map.scrollWheelZoom.disable();
     map.dragging.disable();
+    console.info('adding layer to map');
     var layer = mb.featureLayer().addTo(map);
     layer.on('click', function(e) {
       if (that.props.clickEventName && e.layer.feature.properties.eventDetail) {

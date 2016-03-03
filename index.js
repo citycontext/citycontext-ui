@@ -4,6 +4,7 @@ var CriminalityWidget  = require('./widgets/criminality');
 var SchoolsWidget      = require('./widgets/schools');
 var TransportWidget    = require('./widgets/transport');
 var FloodWidget        = require('./widgets/flood');
+var NoiseWidget        = require('./widgets/noise');
 var config             = require('./config');
 
 module.exports = {
@@ -12,5 +13,6 @@ module.exports = {
   DemographicsWidget: DemographicsWidget,
   SchoolsWidget: SchoolsWidget,
   TransportWidget: TransportWidget,
-  FloodWidget: FloodWidget
+  FloodWidget: FloodWidget,
+  NoiseWidget: NoiseWidget
 };
